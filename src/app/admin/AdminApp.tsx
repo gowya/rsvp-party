@@ -16,24 +16,38 @@ type Row = {
   updated_at: string;
 };
 
-const ANSWER_LABEL: Record<Answer, string> = { oui: "Oui 🔥", "peut-etre": "Peut-être 🤔", non: "Non 😢" };
+const ANSWER_LABEL: Record<Answer, string> = {
+  oui: "Oui 🔥",
+  "peut-etre": "Peut-être 🤔",
+  non: "Non 😢",
+};
 const PASS_KEY = `${EVENT.storageKey}-admin`;
 
-type Result = { kind: "ok"; rows: Row[] } | { kind: "unauthorized" } | { kind: "error" };
+type Result = { kind: "ok"; rows: Row[]; demo: boolean } | { kind: "unauthorized" } | { kind: "error" };
 
 async function fetchResponses(password: string): Promise<Result> {
   try {
-    const res = await fetch("/api/admin", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password }) });
+    const res = await fetch("/api/admin", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password }),
+    });
     if (res.status === 401) return { kind: "unauthorized" };
     if (!res.ok) return { kind: "error" };
-    return { kind: "ok", rows: ((await res.json()) as { responses: Row[] }).responses };
+    const data = (await res.json()) as { responses: Row[]; demo?: boolean };
+    return { kind: "ok", rows: data.responses, demo: Boolean(data.demo) };
   } catch {
     return { kind: "error" };
   }
 }
 
 const dateFr = (iso: string) =>
-  new Date(iso).toLocaleString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+  new Date(iso).toLocaleString("fr-FR", {
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
 // L'admin des organisateurs : toutes les réponses, qui ramène quoi, qui a proposé quel son
 export default function AdminApp() {
@@ -41,12 +55,14 @@ export default function AdminApp() {
   const [rows, setRows] = useState<Row[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [demo, setDemo] = useState(false);
 
   // Applique la réponse de l'API admin (appelé après la requête, jamais pendant le rendu)
   const apply = (pass: string, result: Result) => {
     setLoading(false);
     if (result.kind === "ok") {
       setRows(result.rows);
+      setDemo(result.demo);
       setPassword(pass);
       setError(null);
       try {
@@ -130,7 +146,9 @@ export default function AdminApp() {
       <header className={s.head}>
         <div>
           <h1 className={s.title}>Admin</h1>
-          <p className={s.muted}>{EVENT.title} · {rows.length} réponse{rows.length > 1 ? "s" : ""}</p>
+          <p className={s.muted}>
+            {EVENT.title} · {rows.length} réponse{rows.length > 1 ? "s" : ""}
+          </p>
         </div>
         <div className={s.headActions}>
           <button className={s.btnGhost} type="button" onClick={() => load(password)} disabled={loading}>
@@ -143,6 +161,11 @@ export default function AdminApp() {
       </header>
 
       {error && <p className={s.error}>{error}</p>}
+      {demo && (
+        <p className={s.demo}>
+          Démo en lecture seule : seules les réponses d&apos;exemple s&apos;affichent ici, et la suppression est désactivée.
+        </p>
+      )}
 
       <section className={s.stats}>
         {(["oui", "peut-etre", "non"] as Answer[]).map((a) => (
@@ -158,9 +181,7 @@ export default function AdminApp() {
           <h2 className={s.h2}>Qui ramène quoi</h2>
           <ul className={s.brings}>
             {POLL_ITEMS.map((it) => {
-              const names = coming
-                .filter((r) => r.brings.includes(it.key))
-                .map((r) => r.name);
+              const names = coming.filter((r) => r.brings.includes(it.key)).map((r) => r.name);
               return (
                 <li key={it.key} className={s.bring}>
                   <span className={s.bringHead}>
@@ -234,9 +255,16 @@ export default function AdminApp() {
                     {r.updated_at !== r.created_at ? ` · modifié le ${dateFr(r.updated_at)}` : ""}
                   </span>
                 </div>
-                <button className={s.delete} type="button" onClick={() => void remove(r)} aria-label={`Supprimer la réponse de ${r.name}`}>
-                  Supprimer
-                </button>
+                {!demo && (
+                  <button
+                    className={s.delete}
+                    type="button"
+                    onClick={() => void remove(r)}
+                    aria-label={`Supprimer la réponse de ${r.name}`}
+                  >
+                    Supprimer
+                  </button>
+                )}
               </li>
             ))}
           </ul>

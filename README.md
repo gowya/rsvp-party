@@ -2,7 +2,9 @@
 
 Un site d'invitation animé pour une fête : compte à rebours, réponses en direct, « qui ramène quoi », playlist collaborative et page admin. Pensé pour le téléphone (le lien circule sur WhatsApp).
 
-> Projet en cours de construction. Le README complet (démo, captures, guide « créer ton événement ») arrive bientôt.
+**Démo :** [rsvp-party-demo.vercel.app](https://rsvp-party-demo.vercel.app) (un anniversaire fictif). Page admin : [/admin](https://rsvp-party-demo.vercel.app/admin), mot de passe `demo`.
+
+> Projet en cours de construction. Le README complet (captures, guide « créer ton événement ») arrive bientôt.
 
 ## Démarrer
 
@@ -48,6 +50,17 @@ Un thème vit dans `src/themes/<nom>/` et fournit (contrat complet dans [`src/th
 Le reste du site (sections, réponses en direct, sondage, playlist, admin, API) est commun à tous les thèmes.
 
 **Créer un thème :** copier `src/themes/disco` sous un nouveau nom, l'adapter, l'ajouter dans [`src/themes/index.ts`](src/themes/index.ts) et dans le type `theme` de [`src/config/schema.ts`](src/config/schema.ts).
+
+## Mode démo
+
+Avec la variable `DEMO_MODE=1`, le site devient une vitrine publique sans risque :
+
+- les réponses d'exemple de [`db/seed-demo.sql`](db/seed-demo.sql) sont visibles par tout le monde ;
+- chaque visiteur peut répondre, cocher et proposer des sons, mais ne voit que ses propres ajouts (jamais ceux des autres) ;
+- les ajouts des visiteurs s'effacent au bout de 2 jours ;
+- l'admin ne montre que les réponses d'exemple, en lecture seule.
+
+L'image d'aperçu des liens partagés (`public/apercu.jpg`) se fabrique en local à partir de la page `/og-preview`.
 
 ## Stack
 

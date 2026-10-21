@@ -40,3 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 !.env.example
+
+# fichiers générés par les outils d'assistant
+.agents/
+.claude/
+skills-lock.json

@@ -1,5 +1,6 @@
 import { EVENT } from "@/data/event";
 import { sql } from "@/server/db";
+import { cleanupDemo } from "@/server/demo";
 import { disabled, getPublicState, isToken, json } from "@/server/state";
 
 const ANSWERS = new Set(["oui", "peut-etre", "non"]);
@@ -20,6 +21,7 @@ export async function POST(request: Request) {
     return json({ error: "invalid" }, 400);
   }
 
+  await cleanupDemo();
   const [{ total }] = (await sql()`select count(*)::int as total from responses`) as { total: number }[];
   if (total >= MAX_RESPONSES) {
     const [exists] = await sql()`select 1 from responses where token = ${token}`;

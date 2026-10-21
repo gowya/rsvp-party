@@ -9,6 +9,8 @@ create table if not exists responses (
   -- Ce que la personne ramène (clés de POLL_ITEMS) et ses « autre chose » en texte libre
   brings text[] not null default '{}',
   brings_others text[] not null default '{}',
+  -- Réponse d'exemple du mode démo (DEMO_MODE=1) : visible par tous, jamais effacée
+  is_seed boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );

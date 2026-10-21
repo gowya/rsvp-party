@@ -1,4 +1,5 @@
 import { sql } from "@/server/db";
+import { DEMO } from "@/server/demo";
 import { checkAdminPassword } from "@/server/private";
 import { isUuid, json } from "@/server/state";
 
@@ -12,16 +13,18 @@ export async function POST(request: Request) {
       coalesce(array_agg(s.title order by s.created_at) filter (where s.id is not null), '{}') as songs
     from responses r
     left join songs s on s.response_id = r.id
+    where not ${DEMO} or r.is_seed
     group by r.id
     order by r.created_at
   `;
-  return json({ responses: rows });
+  return json({ responses: rows, demo: DEMO });
 }
 
 // Supprimer une réponse (doublon, test, spam)
 export async function DELETE(request: Request) {
   const body = (await request.json().catch(() => null)) as Record<string, unknown> | null;
   if (!checkAdminPassword(body?.password)) return json({ error: "unauthorized" }, 401);
+  if (DEMO) return json({ error: "demo" }, 403);
   if (!isUuid(body?.id)) return json({ error: "invalid" }, 400);
 
   await sql()`delete from responses where id = ${body.id}`;

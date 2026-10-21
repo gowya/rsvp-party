@@ -1,6 +1,7 @@
 import { EVENT } from "@/data/event";
 import { MAX_OTHERS_PER_GUEST, OTHER_MAX, POLL_ITEMS, POLL_KEYS } from "@/lib/poll";
 import { sql } from "@/server/db";
+import { DEMO } from "@/server/demo";
 import { disabled, getPublicState, isToken, json } from "@/server/state";
 
 // Cocher ce qu'on ramène : il faut avoir répondu au formulaire, et respecter les limites par truc
@@ -29,7 +30,7 @@ export async function POST(request: Request) {
   if (limited.length) {
     const rows = (await sql()`
       select unnest(brings) as k, count(*)::int as n from responses
-      where answer <> 'non' and id <> ${mine.id}
+      where answer <> 'non' and id <> ${mine.id} and (not ${DEMO} or is_seed)
       group by k
     `) as { k: string; n: number }[];
     const full = limited.find((it) => (rows.find((r) => r.k === it.key)?.n ?? 0) >= (it.limit as number));

@@ -3,8 +3,9 @@ import { POLL_KEYS, type Answer, type PublicState } from "@/lib/poll";
 import { EVENT } from "@/data/event";
 import { sql } from "./db";
 import { ADDRESS } from "./private";
+import { DEMO } from "./demo";
 
-type Row = { id: string; token: string; name: string; answer: Answer; brings: string[]; brings_others: string[] };
+type Row = { id: string; token: string; name: string; answer: Answer; brings: string[]; brings_others: string[]; is_seed: boolean };
 type SongRow = { id: string; response_id: string; title: string };
 
 // L'état public : prénoms des « oui », comptes du sondage, sons sans auteur, et la réponse de la personne
@@ -14,10 +15,15 @@ export async function getPublicState(token: string | null): Promise<PublicState>
     return { guests: [], counts: {}, songs: [], others: [], me: null, address: EVENT.revealAddress === "always" ? ADDRESS : null };
   }
 
-  const [rows, songRows] = (await Promise.all([
-    sql()`select id, token, name, answer, brings, brings_others from responses order by created_at`,
+  const [allRows, allSongs] = (await Promise.all([
+    sql()`select id, token, name, answer, brings, brings_others, is_seed from responses order by created_at`,
     sql()`select id, response_id, title from songs order by created_at`,
   ])) as [Row[], SongRow[]];
+
+  // En démo, chaque visiteur ne voit que les graines et ses propres réponses
+  const rows = DEMO ? allRows.filter((r) => r.is_seed || (token !== null && r.token === token)) : allRows;
+  const visible = new Set(rows.map((r) => r.id));
+  const songRows = allSongs.filter((s) => visible.has(s.response_id));
 
   const counts: Record<string, number> = Object.fromEntries(POLL_KEYS.map((k) => [k, 0]));
   for (const r of rows) {
