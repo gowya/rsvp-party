@@ -23,8 +23,8 @@ const mono = Space_Mono({
   weight: "700",
 });
 
-const DESCRIPTION = `${EVENT.dateLong}, ${EVENT.time}, chez moi. Viens fêter mes ${EVENT.age} ans !`;
-const TITLE = `${EVENT.name} a ${EVENT.age} ans`;
+const DESCRIPTION = EVENT.description;
+const TITLE = EVENT.title;
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 // Icônes : app/icon.svg et app/apple-icon.png. Image d'aperçu : public/apercu.jpg
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     siteName: EVENT.title,
     title: `${TITLE} ☀︎`,
     description: DESCRIPTION,
-    images: [{ url: "/apercu.jpg", width: 800, height: 800, type: "image/jpeg", alt: `${EVENT.title} : une boule disco, « ${EVENT.age} ans » en géant et des cocktails` }],
+    images: [{ url: "/apercu.jpg", width: 800, height: 800, type: "image/jpeg", alt: `${EVENT.title} : l'invitation` }],
   },
   twitter: { card: "summary_large_image", title: `${TITLE} ☀︎`, description: DESCRIPTION, images: ["/apercu.jpg"] },
 };

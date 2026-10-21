@@ -6,12 +6,12 @@ import { isToken } from "@/server/state";
 // Fichier agenda (Apple, Outlook) : l'adresse exacte seulement pour qui a confirmé
 export async function GET(request: Request) {
   const token = new URL(request.url).searchParams.get("token");
-  let confirmed = false;
-  if (isToken(token)) {
+  let confirmed = EVENT.revealAddress === "always";
+  if (!confirmed && EVENT.sections.rsvp && isToken(token)) {
     const [row] = (await sql()`select answer from responses where token = ${token}`) as { answer: string }[];
     confirmed = Boolean(row && row.answer !== "non");
   }
-  const location = (confirmed ? ADDRESS : EVENT.city).replace(/,/g, "\\,");
+  const location = ((confirmed && ADDRESS) || EVENT.city).replace(/,/g, "\\,");
   const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
 
   const ics = [

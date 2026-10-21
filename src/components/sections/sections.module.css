@@ -6,12 +6,7 @@
 }
 
 /* Le ciel : chaque section reprend la teinte où la précédente s'arrête, du jour à la nuit */
-.sky1 { background: linear-gradient(180deg, var(--sky-1), var(--sky-2)); }
-.sky2 { background: linear-gradient(180deg, var(--sky-2), var(--sky-3)); }
-.sky3 { background: linear-gradient(180deg, var(--sky-3), var(--sky-4)); }
-.sky4 { background: linear-gradient(180deg, var(--sky-4), var(--sky-5)); }
-.sky5 { background: linear-gradient(180deg, var(--sky-5), var(--sky-6)); }
-.sky6 { background: linear-gradient(180deg, var(--sky-6), var(--sky-7) 35%, var(--sky-8)); }
+/* Le fond de chaque section est calculé dans lib/sky.ts selon les sections affichées */
 
 /* Sections sombres : les textes passent en crème */
 .dark {
@@ -30,7 +25,7 @@
   color: var(--sun-100);
 }
 
-.dark /* Poubelle sur ses propres sons */
+/* Poubelle sur ses propres sons */
 .trackDelete {
   display: grid;
   place-items: center;
@@ -58,13 +53,12 @@
   background: rgb(255 251 230 / 0.15);
 }
 
-.trackNum {
+.dark .trackNum {
   color: var(--sun-400);
 }
 
 /* Quand le ciel devient orange puis sombre, les titres passent aux jaunes du soleil */
-.sky4 .sunset,
-.sky5 .sunset,
+.warm .sunset,
 .dark .sunset {
   background-image: linear-gradient(180deg, var(--sun-50) 10%, var(--sun) 50%, var(--sun-400) 90%);
 }

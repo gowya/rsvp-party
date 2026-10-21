@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type CSSProperties } from "react";
+import { useRef, type CSSProperties, type ReactNode } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import DiscoBall from "./DiscoBall";
@@ -17,7 +17,10 @@ import s from "./Intro.module.css";
 gsap.registerPlugin(useGSAP);
 
 const NAME = EVENT.name.toUpperCase();
-const CTA_TEXT = "CONFIRME TA PRÉSENCE ✦ CONFIRME TA PRÉSENCE ✦ ";
+// Le bouton rond mène au formulaire, ou aux infos si le formulaire est désactivé
+const CTA = EVENT.sections.rsvp
+  ? { href: "#rsvp", label: "Confirme ta présence", ring: "CONFIRME TA PRÉSENCE ✦ CONFIRME TA PRÉSENCE ✦ " }
+  : { href: EVENT.sections.infos ? "#infos" : "#fin", label: "Toutes les infos", ring: "TOUTES LES INFOS ✦ TOUTES LES INFOS ✦ TOUTES LES INFOS ✦ " };
 
 const ITEMS = [
   { slot: s.slot1, Comp: DrinkSpritz, depth: 1.3 },
@@ -26,6 +29,16 @@ const ITEMS = [
   { slot: s.slot4, Comp: DrinkCosmopolitan, depth: 0.6 },
   { slot: s.slot5, Comp: DrinkNegroni, depth: 0.5 },
 ];
+
+// Un objet du hero : ouvre le tiroir de l'easter egg s'il est actif, sinon simple décor
+function Clickable({ className, children }: { className: string; children: ReactNode }) {
+  if (!EVENT.easterEgg.enabled) return <div className={className}>{children}</div>;
+  return (
+    <button type="button" className={className} onClick={openDrawer} aria-label={DRAWER.open}>
+      {children}
+    </button>
+  );
+}
 
 export default function Intro() {
   const root = useRef<HTMLDivElement>(null);
@@ -130,10 +143,12 @@ export default function Intro() {
         </div>
 
         <div className={s.title}>
-          <div className={s.badge}>
-            <span className={s.badgeNum}>{EVENT.age}</span>
-            <span className={s.badgePill}>ans</span>
-          </div>
+          {EVENT.badge && (
+            <div className={s.badge}>
+              <span className={s.badgeNum}>{EVENT.badge.big}</span>
+              <span className={s.badgePill}>{EVENT.badge.small}</span>
+            </div>
+          )}
           <h1 className={s.name} aria-label={NAME}>
             {NAME.split("").map((char, i) => (
               <span key={i} className={s.letterMask} aria-hidden="true">
@@ -157,38 +172,43 @@ export default function Intro() {
 
         {ITEMS.map(({ slot, Comp, depth }, i) => (
           <div key={i} className={`${s.itemSlot} ${slot}`} style={{ "--depth": depth } as CSSProperties}>
-            <button type="button" className={s.item} onClick={openDrawer} aria-label={DRAWER.open}>
+            <Clickable className={s.item}>
               <Comp />
-            </button>
+            </Clickable>
           </div>
         ))}
         <div className={`${s.itemSlot} ${s.slot6}`} style={{ "--depth": 0.8 } as CSSProperties}>
-          <button type="button" className={s.item} onClick={openDrawer} aria-label={DRAWER.open}>
+          <Clickable className={s.item}>
             <CocktailPornstar />
-          </button>
+          </Clickable>
         </div>
 
         <div className={`${s.info} ${s.reveal}`}>
-          <p className={s.infoTitle}>On fête mes {EVENT.age} ans.</p>
+          <p className={s.infoTitle}>{EVENT.texts.tagline}</p>
           <p className={s.infoMeta}>
             {EVENT.dateShortWithDay} · {EVENT.time} · {EVENT.city}
           </p>
           <MotionButton className={s.motionBtn} />
         </div>
 
-        <a href="#rsvp" className={`${s.cta} ${s.reveal}`} aria-label="Confirme ta présence">
+        <a href={CTA.href} className={`${s.cta} ${s.reveal}`} aria-label={CTA.label}>
           <svg viewBox="0 0 200 200" className={s.ctaRing} aria-hidden="true">
             <defs>
               <path id="cta-circle" d="M100 100 m-74 0 a74 74 0 1 1 148 0 a74 74 0 1 1 -148 0" />
             </defs>
             <text>
               <textPath href="#cta-circle" textLength="462">
-                {CTA_TEXT}
+                {CTA.ring}
               </textPath>
             </text>
           </svg>
           <span className={s.ctaCenter} aria-hidden="true">↓</span>
         </a>
+
+        {/* Vague qui raccorde le hero au ciel des sections */}
+        <svg className={s.wave} viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 56 V28 C120 0 240 0 360 28 S600 56 720 28 S960 0 1080 28 S1320 56 1440 28 V56 Z" fill="var(--sky-1)" />
+        </svg>
       </section>
     </div>
   );

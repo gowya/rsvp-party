@@ -1,5 +1,6 @@
 "use client";
 
+import { skyClass, type Sky } from "@/lib/sky";
 import { useRef, useState, type FormEvent } from "react";
 import Image from "next/image";
 import { EVENT } from "@/data/event";
@@ -16,15 +17,11 @@ const ANSWERS: { key: Answer; label: string }[] = [
   { key: "non", label: "Je peux pas 😢" },
 ];
 
-const THANKS: Record<Answer, string> = {
-  oui: "Trop bien, j'ai hâte de te voir !",
-  "peut-etre": "Ok, je garde une place au chaud. Dis-moi vite !",
-  non: "Snif. On trinquera à ta santé quand même.",
-};
+const THANKS = EVENT.texts.thanks;
 
 type Draft = { name: string; answer: Answer | null };
 
-export default function Rsvp() {
+export default function Rsvp({ sky }: { sky: Sky }) {
   const { me } = useLive();
   // null : pas en train de modifier (on affiche la réponse enregistrée s'il y en a une)
   const [draft, setDraft] = useState<Draft | null>(null);
@@ -53,7 +50,7 @@ export default function Rsvp() {
       setDraft(null);
       setStatus("idle");
       // Le voyage jusqu'à « Ils seront là », seulement quand on vient de dire oui
-      if (answer === "oui" && !wasComing && from) void flyToGuests(name, from, s.pill);
+      if (answer === "oui" && !wasComing && from && EVENT.sections.guests) void flyToGuests(name, from, s.pill);
     } catch {
       setStatus("error");
     }
@@ -64,7 +61,7 @@ export default function Rsvp() {
   };
 
   return (
-    <section className={`${s.section} ${s.sky3}`} id="rsvp">
+    <section className={skyClass(s, sky)} style={sky.style} id="rsvp">
       <div className={`${s.wrap} ${s.rsvp}`}>
         <div>
           <span className={s.kicker}>✦ Réponds-moi</span>
@@ -81,7 +78,7 @@ export default function Rsvp() {
                 <PhotoPlaceholder variant="yay" />
               )}
             </div>
-            <figcaption className={s.hand}>moi quand tu dis oui</figcaption>
+            <figcaption className={s.hand}>{EVENT.texts.rsvpCaption}</figcaption>
           </figure>
         </div>
 

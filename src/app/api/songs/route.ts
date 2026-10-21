@@ -1,6 +1,7 @@
+import { EVENT } from "@/data/event";
 import { MAX_SONGS_PER_GUEST } from "@/lib/poll";
 import { sql } from "@/server/db";
-import { getPublicState, isToken, isUuid, json } from "@/server/state";
+import { disabled, getPublicState, isToken, isUuid, json } from "@/server/state";
 
 async function responseId(token: string) {
   const [row] = (await sql()`select id from responses where token = ${token}`) as { id: string }[];
@@ -9,6 +10,7 @@ async function responseId(token: string) {
 
 // Proposer un son : il faut avoir répondu au formulaire (l'admin sait ainsi qui l'a proposé)
 export async function POST(request: Request) {
+  if (!EVENT.sections.playlist) return disabled();
   const body = (await request.json().catch(() => null)) as Record<string, unknown> | null;
   const title = typeof body?.title === "string" ? body.title.trim().replace(/\s+/g, " ").slice(0, 100) : "";
   if (!isToken(body?.token) || !title) return json({ error: "invalid" }, 400);
@@ -25,6 +27,7 @@ export async function POST(request: Request) {
 
 // Retirer un de ses propres sons
 export async function DELETE(request: Request) {
+  if (!EVENT.sections.playlist) return disabled();
   const body = (await request.json().catch(() => null)) as Record<string, unknown> | null;
   if (!isToken(body?.token) || !isUuid(body?.id)) return json({ error: "invalid" }, 400);
 

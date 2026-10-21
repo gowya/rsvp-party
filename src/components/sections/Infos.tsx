@@ -1,3 +1,4 @@
+import { skyClass, type Sky } from "@/lib/sky";
 import CalendarButtons from "../CalendarButtons";
 import DresscodeIllus from "../DresscodeIllus";
 import PlaceCard from "./PlaceCard";
@@ -6,9 +7,9 @@ import { EVENT } from "@/data/event";
 import DrawerTrigger from "../DrawerTrigger";
 import s from "./sections.module.css";
 
-export default function Infos() {
+export default function Infos({ sky }: { sky: Sky }) {
   return (
-    <section className={`${s.section} ${s.sky2}`} id="infos">
+    <section className={skyClass(s, sky)} style={sky.style} id="infos">
       <div className={s.wrap}>
         <span className={s.kicker}>✦ À noter quelque part</span>
         <h2 className={s.title}>
@@ -27,18 +28,18 @@ export default function Infos() {
 
           <PlaceCard />
 
-          <article className={`${s.card} ${s.dresscode}`}>
-            <div>
-              <p className={s.label}>Dress code</p>
-              <p className={s.cardBig}>
-                Code couleur : <span className={s.yellowMark}>jaune</span>
-              </p>
-              <p className={s.cardText}>
-                Du jaune sur toi, un peu ou beaucoup.
-              </p>
-            </div>
-            <DresscodeIllus />
-          </article>
+          {EVENT.dresscode && (
+            <article className={`${s.card} ${s.dresscode}`}>
+              <div>
+                <p className={s.label}>Dress code</p>
+                <p className={s.cardBig}>
+                  {EVENT.dresscode.title} <span className={s.yellowMark}>{EVENT.dresscode.highlight}</span>
+                </p>
+                <p className={s.cardText}>{EVENT.dresscode.text}</p>
+              </div>
+              <DresscodeIllus />
+            </article>
+          )}
         </div>
 
         <DrawerTrigger className={`${s.deco} ${s.infosDeco}`}>

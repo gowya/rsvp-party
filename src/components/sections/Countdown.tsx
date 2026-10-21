@@ -1,5 +1,6 @@
 "use client";
 
+import { skyClass, type Sky } from "@/lib/sky";
 import { useEffect, useState } from "react";
 import { EVENT } from "@/data/event";
 import { DrinkSpritz } from "../illus/Drinks";
@@ -14,7 +15,7 @@ function split(ms: number) {
   return [Math.floor(t / 86400), Math.floor((t % 86400) / 3600), Math.floor((t % 3600) / 60), t % 60];
 }
 
-export default function Countdown() {
+export default function Countdown({ sky }: { sky: Sky }) {
   // Rendu « -- » côté serveur, l'heure réelle n'arrive qu'au montage
   const [parts, setParts] = useState<number[] | null>(null);
 
@@ -26,10 +27,7 @@ export default function Countdown() {
   }, []);
 
   return (
-    <section className={`${s.section} ${s.sky1}`} id="countdown">
-      <svg className={s.wave} viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0 56 V28 C120 0 240 0 360 28 S600 56 720 28 S960 0 1080 28 S1320 56 1440 28 V56 Z" fill="var(--sky-1)" />
-      </svg>
+    <section className={skyClass(s, sky)} style={sky.style} id="countdown">
       <div className={s.wrap}>
         <span className={s.kicker}>✦ Le jour J approche</span>
         <h2 className={s.title}>

@@ -1,6 +1,8 @@
 "use client";
 
+import { skyClass, type Sky } from "@/lib/sky";
 import { useState } from "react";
+import { EVENT } from "@/data/event";
 import { saveBrings, useLive } from "@/lib/live";
 import { MAX_OTHERS_PER_GUEST, OTHER_MAX, POLL_ITEMS } from "@/lib/poll";
 import { CocktailCubaLibre } from "../Cocktails";
@@ -9,7 +11,7 @@ import DrawerTrigger from "../DrawerTrigger";
 import s from "./sections.module.css";
 
 // Qui ramène quoi : on coche après avoir répondu, les prénoms ne sont visibles que dans l'admin
-export default function Poll() {
+export default function Poll({ sky }: { sky: Sky }) {
   const { me, counts, others } = useLive();
   const picked = me?.brings ?? [];
   const canPick = Boolean(me && me.answer !== "non");
@@ -52,7 +54,7 @@ export default function Poll() {
   const noLimitMax = Math.max(4, ...POLL_ITEMS.map((it) => counts[it.key] ?? 0));
 
   return (
-    <section className={`${s.section} ${s.sky5}`} id="sondage">
+    <section className={skyClass(s, sky)} style={sky.style} id="sondage">
       <div className={s.wrap}>
         <span className={s.kicker}>✦ Le sondage</span>
         <h2 className={s.title}>
@@ -61,7 +63,7 @@ export default function Poll() {
           <span className={s.outline}>quoi ?</span>
         </h2>
         <p className={s.hand} style={{ marginTop: 20 }}>
-          coche ce que tu ramènes, merci beaucoup d&apos;avance boss 😝
+          {EVENT.texts.pollIntro}
         </p>
 
         <div className={`${s.deco} ${s.pollCocktail}`}>
@@ -139,6 +141,7 @@ export default function Poll() {
         </div>
 
         {canPick &&
+          MAX_OTHERS_PER_GUEST > 0 &&
           mineOthers.length < MAX_OTHERS_PER_GUEST &&
           (otherDraft === null ? (
             <button type="button" className={s.otherPill} onClick={() => setOtherDraft("")}>

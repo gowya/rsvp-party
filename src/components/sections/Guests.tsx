@@ -1,5 +1,6 @@
 "use client";
 
+import { skyClass, type Sky } from "@/lib/sky";
 import { EVENT } from "@/data/event";
 import { useLive } from "@/lib/live";
 import { DrinkChampagne } from "../illus/Drinks";
@@ -10,12 +11,12 @@ const COLORS = ["var(--rose)", "var(--sun-400)", "var(--mint)", "var(--lilac)", 
 const TILTS = [-3, 2, -1, 3, -2, 1, 0];
 
 // Ils seront là : la personne fêtée en star, puis les « oui », en direct
-export default function Guests() {
+export default function Guests({ sky }: { sky: Sky }) {
   const { guests, me, flying } = useLive();
   const meComing = me?.answer === "oui";
 
   return (
-    <section className={`${s.section} ${s.sky4}`} id="invites">
+    <section className={skyClass(s, sky)} style={sky.style} id="invites">
       <div className={s.wrap}>
         <div className={s.guestsHead}>
           <div>

@@ -35,8 +35,9 @@ export default function Outro() {
       <div className={s.outroSun} />
       <div className={s.outroContent}>
         <h2 className={s.outroTitle}>
-          <span>À</span>
-          <span>{EVENT.month}</span>
+          {EVENT.texts.outro.map((line, i) => (
+            <span key={i}>{line}</span>
+          ))}
         </h2>
         <CalendarButtons rowClass={`${s.btnRow} ${s.btnRowCenter}`} className={s.btn} primaryClass={s.btnPrimary} />
       </div>
@@ -48,9 +49,9 @@ export default function Outro() {
       </DrawerTrigger>
       <footer className={s.footer}>
         <span>
-          {EVENT.name} ☀︎ {EVENT.age} ans
+          {EVENT.name} ☀︎{EVENT.badge ? ` ${EVENT.badge.big} ${EVENT.badge.small}` : ""}
         </span>
-        <span>{DRAWER.hint}</span>
+        {EVENT.easterEgg.enabled && <span>{DRAWER.hint}</span>}
         <span>{EVENT.dateFull}</span>
       </footer>
     </section>

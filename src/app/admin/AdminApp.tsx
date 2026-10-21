@@ -153,54 +153,58 @@ export default function AdminApp() {
         ))}
       </section>
 
-      <section className={s.block}>
-        <h2 className={s.h2}>Qui ramène quoi</h2>
-        <ul className={s.brings}>
-          {POLL_ITEMS.map((it) => {
-            const names = coming
-              .filter((r) => r.brings.includes(it.key))
-              .map((r) => r.name);
-            return (
-              <li key={it.key} className={s.bring}>
-                <span className={s.bringHead}>
-                  {it.emoji} {it.label}{" "}
-                  <strong>
-                    {names.length}
-                    {it.limit !== null ? `/${it.limit}` : ""}
-                  </strong>
-                </span>
-                <span className={s.muted}>{names.length ? names.join(", ") : "Personne pour l'instant"}</span>
-              </li>
-            );
-          })}
-          <li className={s.bring}>
-            <span className={s.bringHead}>
-              ➕ Autre chose <strong>{coming.reduce((n, r) => n + r.brings_others.length, 0)}</strong>
-            </span>
-            <span className={s.muted}>
-              {coming
-                .filter((r) => r.brings_others.length)
-                .map((r) => `${r.name} : ${r.brings_others.join(", ")}`)
-                .join(" · ") || "Personne pour l'instant"}
-            </span>
-          </li>
-        </ul>
-      </section>
+      {EVENT.sections.poll && (
+        <section className={s.block}>
+          <h2 className={s.h2}>Qui ramène quoi</h2>
+          <ul className={s.brings}>
+            {POLL_ITEMS.map((it) => {
+              const names = coming
+                .filter((r) => r.brings.includes(it.key))
+                .map((r) => r.name);
+              return (
+                <li key={it.key} className={s.bring}>
+                  <span className={s.bringHead}>
+                    {it.emoji} {it.label}{" "}
+                    <strong>
+                      {names.length}
+                      {it.limit !== null ? `/${it.limit}` : ""}
+                    </strong>
+                  </span>
+                  <span className={s.muted}>{names.length ? names.join(", ") : "Personne pour l'instant"}</span>
+                </li>
+              );
+            })}
+            <li className={s.bring}>
+              <span className={s.bringHead}>
+                ➕ Autre chose <strong>{coming.reduce((n, r) => n + r.brings_others.length, 0)}</strong>
+              </span>
+              <span className={s.muted}>
+                {coming
+                  .filter((r) => r.brings_others.length)
+                  .map((r) => `${r.name} : ${r.brings_others.join(", ")}`)
+                  .join(" · ") || "Personne pour l'instant"}
+              </span>
+            </li>
+          </ul>
+        </section>
+      )}
 
-      <section className={s.block}>
-        <h2 className={s.h2}>La playlist</h2>
-        {songs.length ? (
-          <ol className={s.songs}>
-            {songs.map((song) => (
-              <li key={song.key}>
-                <strong>{song.title}</strong> <span className={s.muted}>proposé par {song.name}</span>
-              </li>
-            ))}
-          </ol>
-        ) : (
-          <p className={s.muted}>Aucun son proposé pour l&apos;instant.</p>
-        )}
-      </section>
+      {EVENT.sections.playlist && (
+        <section className={s.block}>
+          <h2 className={s.h2}>La playlist</h2>
+          {songs.length ? (
+            <ol className={s.songs}>
+              {songs.map((song) => (
+                <li key={song.key}>
+                  <strong>{song.title}</strong> <span className={s.muted}>proposé par {song.name}</span>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p className={s.muted}>Aucun son proposé pour l&apos;instant.</p>
+          )}
+        </section>
+      )}
 
       <section className={s.block}>
         <h2 className={s.h2}>Toutes les réponses</h2>

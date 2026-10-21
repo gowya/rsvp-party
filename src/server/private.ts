@@ -2,7 +2,8 @@ import "server-only";
 import { timingSafeEqual } from "node:crypto";
 
 // Jamais envoyée au navigateur tant que la personne n'a pas confirmé. À définir dans la variable EVENT_ADDRESS.
-export const ADDRESS = process.env.EVENT_ADDRESS?.trim() || "Adresse communiquée bientôt";
+// null tant qu'elle n'est pas renseignée : le site affiche alors seulement la ville.
+export const ADDRESS: string | null = process.env.EVENT_ADDRESS?.trim() || null;
 
 export function checkAdminPassword(input: unknown) {
   const expected = process.env.ADMIN_PASSWORD;

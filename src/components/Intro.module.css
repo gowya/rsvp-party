@@ -302,6 +302,17 @@ button.item:hover svg {
   text-transform: uppercase;
 }
 
+.wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  z-index: 9;
+  display: block;
+  width: 100%;
+  height: var(--wave);
+}
+
 .motionBtn {
   margin-top: 12px;
   padding: 8px 14px;

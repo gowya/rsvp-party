@@ -1,5 +1,6 @@
 "use client";
 
+import { skyClass, type Sky } from "@/lib/sky";
 import { useState, type FormEvent } from "react";
 import { addSong, removeSong, useLive } from "@/lib/live";
 import { MAX_SONGS_PER_GUEST } from "@/lib/poll";
@@ -8,7 +9,7 @@ import { EVENT } from "@/data/event";
 import s from "./sections.module.css";
 
 // La playlist proposée par les invités, sans dire qui a proposé quoi (visible seulement dans l'admin)
-export default function Playlist() {
+export default function Playlist({ sky }: { sky: Sky }) {
   const { songs, me } = useLive();
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
@@ -38,7 +39,7 @@ export default function Playlist() {
   };
 
   return (
-    <section className={`${s.section} ${s.sky6} ${s.dark}`} id="playlist">
+    <section className={skyClass(s, sky)} style={sky.style} id="playlist">
       <div className={s.wrap}>
         <span className={s.kicker}>✦ Proposée par vous</span>
         <h2 className={s.title}>
@@ -58,9 +59,7 @@ export default function Playlist() {
               <div className={s.vinylLabel}>
                 <span>
                   {EVENT.name.toUpperCase()}
-                  <small>
-                    {EVENT.dateShort} · {EVENT.age} ANS
-                  </small>
+                  <small>{EVENT.texts.vinyl}</small>
                 </span>
               </div>
             </div>

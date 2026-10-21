@@ -1,5 +1,6 @@
 import "server-only";
 import { POLL_KEYS, type Answer, type PublicState } from "@/lib/poll";
+import { EVENT } from "@/data/event";
 import { sql } from "./db";
 import { ADDRESS } from "./private";
 
@@ -8,6 +9,11 @@ type SongRow = { id: string; response_id: string; title: string };
 
 // L'état public : prénoms des « oui », comptes du sondage, sons sans auteur, et la réponse de la personne
 export async function getPublicState(token: string | null): Promise<PublicState> {
+  // Sans formulaire de réponse, pas besoin de base de données
+  if (!EVENT.sections.rsvp) {
+    return { guests: [], counts: {}, songs: [], others: [], me: null, address: EVENT.revealAddress === "always" ? ADDRESS : null };
+  }
+
   const [rows, songRows] = (await Promise.all([
     sql()`select id, token, name, answer, brings, brings_others from responses order by created_at`,
     sql()`select id, response_id, title from songs order by created_at`,
@@ -44,13 +50,16 @@ export async function getPublicState(token: string | null): Promise<PublicState>
           songs: songRows.filter((s) => s.response_id === mine.id).map((s) => ({ id: s.id, title: s.title })),
         }
       : null,
-    address: mine && mine.answer !== "non" ? ADDRESS : null,
+    address: EVENT.revealAddress === "always" || (mine && mine.answer !== "non") ? ADDRESS : null,
   };
 }
 
 export const isToken = (t: unknown): t is string => typeof t === "string" && /^[A-Za-z0-9-]{16,64}$/.test(t);
 
 export const isUuid = (v: unknown): v is string => typeof v === "string" && /^[0-9a-f-]{36}$/.test(v);
+
+// Réponse des routes d'une section désactivée dans src/event.config.ts
+export const disabled = () => json({ error: "disabled" }, 404);
 
 export const json = (data: unknown, status = 200) =>
   Response.json(data, { status, headers: { "Cache-Control": "no-store" } });

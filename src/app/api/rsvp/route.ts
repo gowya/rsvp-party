@@ -1,11 +1,13 @@
+import { EVENT } from "@/data/event";
 import { sql } from "@/server/db";
-import { getPublicState, isToken, json } from "@/server/state";
+import { disabled, getPublicState, isToken, json } from "@/server/state";
 
 const ANSWERS = new Set(["oui", "peut-etre", "non"]);
 const MAX_RESPONSES = 400;
 
 // Envoyer ou modifier sa réponse (une seule par téléphone, grâce au token)
 export async function POST(request: Request) {
+  if (!EVENT.sections.rsvp) return disabled();
   const body = await request.json().catch(() => null);
   if (!body || typeof body !== "object") return json({ error: "invalid" }, 400);
   const { token, name, answer, website } = body as Record<string, unknown>;

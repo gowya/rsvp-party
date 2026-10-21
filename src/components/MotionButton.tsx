@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
+import { EVENT } from "@/data/event";
 import { rainItems, requestMotionPermission } from "@/lib/motion";
 
 const TOUCH = "(pointer: coarse)";
@@ -12,8 +13,8 @@ const subscribe = (cb: () => void) => {
 
 const LABELS = {
   idle: "✨ Active les paillettes",
-  on: "Penche ton tel… et secoue-le 👀",
-  denied: "Pas grave, tape sur les cocktails 🍹",
+  on: EVENT.easterEgg.enabled ? "Penche ton tel… et secoue-le 👀" : "Penche ton tel 👀",
+  denied: EVENT.easterEgg.enabled ? "Pas grave, tape sur les cocktails 🍹" : "Pas grave, la fête continue 🪩",
 };
 
 // Sur téléphone : débloque le gyroscope et l'accéléromètre (obligatoire sur iPhone), puis fait une démo

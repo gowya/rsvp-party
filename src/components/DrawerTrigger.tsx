@@ -2,6 +2,7 @@
 
 import type { CSSProperties, ReactNode } from "react";
 import { DRAWER, openDrawer } from "./drawerItems";
+import { EVENT } from "@/data/event";
 import { Mirror } from "./illus/shared";
 
 // Un objet décoratif qui ouvre le tiroir de l'easter egg quand on clique dessus
@@ -16,6 +17,15 @@ export default function DrawerTrigger({
   style?: CSSProperties;
   children: ReactNode;
 }) {
+  // Easter egg désactivé : simple décor
+  if (!EVENT.easterEgg.enabled) {
+    return (
+      <div className={className} style={{ pointerEvents: "none", ...style }}>
+        <Mirror flip={flip}>{children}</Mirror>
+      </div>
+    );
+  }
+
   return (
     <button
       type="button"

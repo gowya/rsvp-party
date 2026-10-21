@@ -1,9 +1,11 @@
+import { EVENT } from "@/data/event";
 import { MAX_OTHERS_PER_GUEST, OTHER_MAX, POLL_ITEMS, POLL_KEYS } from "@/lib/poll";
 import { sql } from "@/server/db";
-import { getPublicState, isToken, json } from "@/server/state";
+import { disabled, getPublicState, isToken, json } from "@/server/state";
 
 // Cocher ce qu'on ramène : il faut avoir répondu au formulaire, et respecter les limites par truc
 export async function POST(request: Request) {
+  if (!EVENT.sections.poll) return disabled();
   const body = await request.json().catch(() => null);
   const { token, brings, others } = (body ?? {}) as Record<string, unknown>;
   if (!isToken(token) || !Array.isArray(brings)) return json({ error: "invalid" }, 400);
