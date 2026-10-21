@@ -1,0 +1,410 @@
+/* ---------- Loader ---------- */
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  background: var(--sun);
+}
+
+.loaderInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: min(560px, 100% - 2 * var(--gutter));
+}
+
+.count {
+  display: flex;
+  align-items: flex-start;
+  font-size: clamp(96px, 22vw, 220px);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.count sup {
+  font-size: 0.32em;
+  margin-left: 0.06em;
+  color: var(--coral);
+}
+
+.line {
+  width: 100%;
+  height: 3px;
+  background: rgb(43 22 8 / 0.12);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.lineFill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--sun-400), var(--tangerine), var(--coral));
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+.caption {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+  background: var(--sky);
+  isolation: isolate;
+}
+
+.topbar {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  padding: 22px var(--gutter);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Le soleil couchant, rayé dans sa moitié basse */
+.sun {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  width: min(74vh, 92vw);
+  aspect-ratio: 1;
+  margin: calc(min(74vh, 92vw) / -2) 0 0 calc(min(74vh, 92vw) / -2);
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fff3b0 0%, var(--sun-400) 35%, var(--apricot) 62%, var(--coral) 100%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% 55% no-repeat,
+    repeating-linear-gradient(180deg, #000 0 16px, transparent 16px 24px) bottom / 100% 45% no-repeat;
+  mask:
+    linear-gradient(#000 0 0) top / 100% 55% no-repeat,
+    repeating-linear-gradient(180deg, #000 0 16px, transparent 16px 24px) bottom / 100% 45% no-repeat;
+}
+
+/* Calques porteurs : la parallaxe et le coucher de soleil vivent ici,
+   les animations GSAP sur les éléments à l'intérieur (GSAP neutralise « translate » sur ce qu'il anime) */
+.sunSet {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  translate: 0 calc(var(--sunset, 0) * 26vh);
+}
+
+.string {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: calc(48% - min(18vh, 25vw));
+  margin-left: -1px;
+  background: var(--ink);
+  opacity: 0.7;
+  transform-origin: top;
+}
+
+.ballSlot {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 48%;
+  width: min(44vh, 62vw);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  translate: calc(var(--tilt-x, 0) * 14px) calc(var(--tilt-y, 0) * 14px - var(--sunset, 0) * 50px);
+}
+
+.ball {
+  width: 100%;
+  height: 100%;
+}
+
+.ball canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.title {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  translate: calc(var(--tilt-x, 0) * -10px) calc(var(--tilt-y, 0) * -8px);
+}
+
+.name {
+  display: flex;
+  font-size: clamp(88px, 21vw, 300px);
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+  text-shadow: 0.035em 0.035em 0 var(--sun-50);
+}
+
+.letterMask {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0.06em 0.01em 0.08em;
+  margin: -0.06em 0 -0.08em;
+}
+
+.letter {
+  display: inline-block;
+}
+
+.badge {
+  position: absolute;
+  z-index: 5;
+  left: 6%;
+  top: -0.78em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: clamp(52px, 9vw, 128px);
+  transform: rotate(-8deg);
+}
+
+.badgeNum {
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--coral);
+  -webkit-text-stroke: 0.035em var(--ink);
+  paint-order: stroke fill;
+}
+
+.badgePill {
+  padding: 0.18em 0.6em 0.22em;
+  border: 2.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--rose);
+  font-family: var(--font-mono);
+  font-size: 0.3em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Photo sticker */
+.photoSlot {
+  position: absolute;
+  z-index: 6;
+  right: calc(var(--gutter) + 4vw);
+  top: 13%;
+  width: clamp(104px, 13vw, 170px);
+  translate: calc(var(--tilt-x, 0) * 22px) calc(var(--tilt-y, 0) * 18px);
+}
+
+.photo {
+  padding: 8px 8px 26px;
+  background: var(--sun-50);
+  border: 2.5px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  transform: rotate(6deg);
+}
+
+.photoInner {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--apricot);
+}
+
+.photoInner img {
+  object-fit: cover;
+}
+
+/* Chaussettes */
+.sockSlot {
+  position: absolute;
+  z-index: 5;
+  width: clamp(70px, 9vw, 140px);
+  translate: calc(var(--tilt-x, 0) * 34px * var(--depth, 1)) calc(var(--tilt-y, 0) * 28px * var(--depth, 1));
+}
+
+.sock {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  filter: drop-shadow(4px 5px 0 rgb(43 22 8 / 0.18));
+}
+
+.sock svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+button.sock {
+  cursor: pointer;
+}
+
+button.sock:hover svg {
+  transform: rotate(-10deg) scale(1.12);
+}
+
+.sock1 { left: 6%; top: 13%; transform: rotate(-14deg); width: clamp(84px, 10.5vw, 160px); }
+.sock2 { left: 3%; top: 56%; transform: rotate(20deg); }
+.sock3 { right: 5%; top: 50%; transform: rotate(-12deg); width: clamp(80px, 10vw, 150px); }
+.sock4 { left: 25%; top: 70%; transform: rotate(28deg); width: clamp(56px, 7vw, 104px); z-index: 3; }
+.sock5 { right: 29%; top: 7%; transform: rotate(-24deg); width: clamp(48px, 5.6vw, 88px); z-index: 3; }
+.sock6 { right: 20%; top: 66%; transform: rotate(-8deg); width: clamp(90px, 11vw, 160px); z-index: 3; }
+
+/* Bas de page */
+.info {
+  position: absolute;
+  z-index: 10;
+  left: var(--gutter);
+  bottom: calc(var(--wave) + 20px);
+}
+
+.infoTitle {
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.infoMeta {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.motionBtn {
+  margin-top: 12px;
+  padding: 8px 14px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--sun-50);
+  box-shadow: 3px 3px 0 var(--ink);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.cta {
+  position: absolute;
+  z-index: 10;
+  right: var(--gutter);
+  bottom: calc(var(--wave) + 14px);
+  display: grid;
+  place-items: center;
+  width: clamp(112px, 11vw, 150px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--sun);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cta:hover {
+  transform: scale(1.08) rotate(-6deg);
+}
+
+.ctaRing {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: spin 14s linear infinite;
+}
+
+.ctaRing text {
+  font-family: var(--font-mono);
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  fill: currentColor;
+}
+
+.ctaCenter {
+  display: grid;
+  place-items: center;
+  width: 40%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--coral);
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 800;
+  color: var(--ink);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 700px) {
+  .name {
+    font-size: 23vw;
+  }
+
+  .badge {
+    left: 2%;
+    top: -1.1em;
+  }
+
+  .photoSlot {
+    top: 11%;
+    right: var(--gutter);
+  }
+
+  .sock1 { left: 3%; top: 10%; width: 92px; }
+  .sock2 { left: -3%; top: 62%; width: 76px; }
+  .sock3 { right: -2%; top: 61%; width: 80px; }
+  .sock4, .sock5, .sock6 { display: none; }
+
+  .info {
+    bottom: calc(var(--wave) + 140px);
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+
+  .cta {
+    left: 50%;
+    right: auto;
+    margin-left: calc(clamp(112px, 11vw, 150px) / -2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ctaRing {
+    animation: none;
+  }
+}

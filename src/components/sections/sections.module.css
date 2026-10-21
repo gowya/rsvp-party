@@ -1,0 +1,1004 @@
+/* ---------- Socle commun ---------- */
+
+.section {
+  position: relative;
+  padding: clamp(72px, 11vw, 150px) 0;
+}
+
+/* Le ciel : chaque section reprend la teinte où la précédente s'arrête, du jour à la nuit */
+.sky1 { background: linear-gradient(180deg, var(--sky-1), var(--sky-2)); }
+.sky2 { background: linear-gradient(180deg, var(--sky-2), var(--sky-3)); }
+.sky3 { background: linear-gradient(180deg, var(--sky-3), var(--sky-4)); }
+.sky4 { background: linear-gradient(180deg, var(--sky-4), var(--sky-5)); }
+.sky5 { background: linear-gradient(180deg, var(--sky-5), var(--sky-6)); }
+.sky6 { background: linear-gradient(180deg, var(--sky-6), var(--sky-7) 35%, var(--sky-8)); }
+
+/* Sections sombres : les textes passent en crème */
+.dark {
+  color: var(--sun-50);
+}
+
+.dark .tracks {
+  border-top-color: var(--sun-50);
+}
+
+.dark .track {
+  border-bottom-color: rgb(255 251 230 / 0.2);
+}
+
+.dark .label {
+  color: var(--sun-100);
+}
+
+.dark /* Poubelle sur ses propres sons */
+.trackDelete {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  align-self: center;
+}
+
+.trackDelete svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.trackDelete:hover {
+  background: rgb(255 251 230 / 0.15);
+}
+
+.trackNum {
+  color: var(--sun-400);
+}
+
+/* Quand le ciel devient orange puis sombre, les titres passent aux jaunes du soleil */
+.sky4 .sunset,
+.sky5 .sunset,
+.dark .sunset {
+  background-image: linear-gradient(180deg, var(--sun-50) 10%, var(--sun) 50%, var(--sun-400) 90%);
+}
+
+.wrap {
+  position: relative;
+  width: min(1200px, 100% - 2 * var(--gutter));
+  margin: 0 auto;
+}
+
+.kicker {
+  display: inline-block;
+  margin-bottom: 18px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: clamp(52px, 10vw, 148px);
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.outline {
+  color: var(--sun-50);
+  -webkit-text-stroke: 5px var(--ink);
+  paint-order: stroke fill;
+}
+
+.sunset {
+  display: inline-block;
+  /* Marge interne pour que la queue du Q et les accents ne soient pas rognés */
+  padding: 0.12em 0.08em 0.16em 0.02em;
+  margin: -0.12em -0.08em -0.16em -0.02em;
+  /* Les orangés du soleil couchant du hero */
+  background: linear-gradient(180deg, #ffa13a 12%, var(--tangerine) 52%, var(--coral) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0.035em 0.035em 0 var(--ink));
+}
+
+.card {
+  position: relative;
+  padding: clamp(20px, 3vw, 32px);
+  border: 2.5px solid var(--ink);
+  border-radius: 24px;
+  background: var(--sun-50);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.btnRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btnRowCenter {
+  justify-content: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border: 2.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--sun-50);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.btnPrimary {
+  background: var(--coral);
+}
+
+.deco {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  filter: drop-shadow(4px 5px 0 rgb(43 22 8 / 0.18));
+}
+
+.deco svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Vague qui raccorde le hero au reste */
+.wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: var(--wave);
+  display: block;
+  width: 100%;
+  margin-bottom: -1px;
+}
+
+/* ---------- Compte à rebours ---------- */
+
+.countGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(8px, 1.6vw, 20px);
+  margin-top: clamp(32px, 5vw, 56px);
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.tileNum {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1 / 1.05;
+  border-radius: clamp(14px, 2vw, 24px);
+  background: var(--ink);
+  color: var(--sun);
+  font-size: clamp(40px, 9vw, 128px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+}
+
+/* La ligne au milieu, façon horloge à palettes */
+.tileNum::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  background: var(--sun);
+  opacity: 0.18;
+}
+
+.tileLabel {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ---------- Infos pratiques ---------- */
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+  margin-top: clamp(32px, 5vw, 56px);
+}
+
+.bento > :nth-child(1) { grid-column: span 4; }
+.bento > :nth-child(2) { grid-column: span 2; }
+.bento > :nth-child(3) { grid-column: span 6; }
+
+.dresscode {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.dresscode .cardText {
+  max-width: 62ch;
+  margin-bottom: 0;
+}
+
+/* Le surligneur jaune, en clin d'œil au dress code */
+.yellowMark {
+  padding: 0 0.12em;
+  background: linear-gradient(transparent 52%, var(--sun-400) 52%);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+
+.cardBig {
+  margin: 10px 0 6px;
+  font-size: clamp(30px, 4.4vw, 56px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.cardMeta {
+  margin-bottom: 18px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--coral);
+}
+
+.cardText {
+  margin-bottom: 18px;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+/* ---------- Formulaire RSVP ---------- */
+
+.rsvp {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+
+.form {
+  display: grid;
+  gap: 22px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2.5px solid var(--ink);
+  border-radius: 14px;
+  background: #fff;
+  font: inherit;
+  font-size: 17px;
+  color: var(--ink);
+  outline: none;
+}
+
+.input::placeholder {
+  color: rgb(43 22 8 / 0.4);
+}
+
+.input:focus-visible {
+  box-shadow: 0 0 0 4px var(--sun-400);
+}
+
+.choices {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.choice {
+  padding: 12px 6px;
+  border: 2.5px solid var(--ink);
+  border-radius: 14px;
+  background: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.choice:hover {
+  transform: translateY(-2px);
+}
+
+.choice[aria-pressed="true"] {
+  background: var(--sun-400);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.submit {
+  justify-self: start;
+  font-size: 13px;
+  padding: 14px 22px;
+}
+
+.thanks {
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  min-height: 320px;
+  text-align: center;
+}
+
+.thanksBig {
+  text-wrap: balance;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.hand {
+  font-family: var(--font-hand);
+  font-size: clamp(24px, 2.6vw, 32px);
+  line-height: 1.1;
+  transform: rotate(-3deg);
+}
+
+.polaroid {
+  width: min(280px, 70%);
+  margin-top: 32px;
+  padding: 10px 10px 8px;
+  border: 2.5px solid var(--ink);
+  background: var(--sun-50);
+  box-shadow: 6px 6px 0 var(--ink);
+  rotate: -4deg;
+}
+
+.polaroidImg {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.polaroidImg img {
+  object-fit: cover;
+}
+
+.polaroid figcaption {
+  margin-top: 8px;
+  text-align: center;
+  rotate: 0deg;
+  transform: none;
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.formError {
+  font-weight: 700;
+  color: #b3261e;
+}
+
+/* ---------- Sondage ---------- */
+
+.pollGate {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 10px 16px;
+  border: 2px dashed var(--ink);
+  border-radius: 14px;
+  font-weight: 700;
+}
+
+.pollGate a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pollItem[data-full] {
+  opacity: 0.55;
+}
+
+.pollItem[data-full] .pollBar {
+  background: var(--sun-100);
+}
+
+.pollOther {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 10px;
+  max-width: 560px;
+  margin-top: 18px;
+}
+
+.otherPill {
+  margin-top: 16px;
+  padding: 10px 18px;
+  border: 2.5px dashed var(--ink);
+  border-radius: 999px;
+  background: var(--sun-50);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.otherCount {
+  font-weight: 600;
+  opacity: 0.6;
+}
+
+.pollNotice {
+  margin-top: 14px;
+  font-weight: 800;
+}
+
+.pollItem[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.pollItem[aria-disabled="true"]:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.pollGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
+  gap: 14px;
+  margin-top: clamp(32px, 5vw, 56px);
+}
+
+.pollItem {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 2.5px solid var(--ink);
+  border-radius: 18px;
+  background: var(--sun-50);
+  font: inherit;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pollItem:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.pollItem[aria-pressed="true"] {
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.pollBar {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: -1;
+  background: var(--sun-400);
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pollItem[aria-pressed="true"] .pollBar {
+  background: var(--apricot);
+}
+
+.pollEmoji {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.pollLabel {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.pollCount {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pollCheck {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin-left: 8px;
+  border: 2.5px solid var(--ink);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+/* ---------- Invités ---------- */
+
+.guestsHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.guestCount {
+  text-align: right;
+}
+
+.guestNum {
+  display: block;
+  font-size: clamp(88px, 14vw, 200px);
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: var(--coral);
+  -webkit-text-stroke: 3px var(--ink);
+  paint-order: stroke fill;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: clamp(32px, 5vw, 56px);
+  list-style: none;
+}
+
+.pill {
+  padding: 10px 20px;
+  border: 2.5px solid var(--ink);
+  border-radius: 999px;
+  font-size: clamp(16px, 1.8vw, 22px);
+  font-weight: 800;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* La star de la soirée */
+.pillStar {
+  padding: 16px 32px;
+  border-width: 3px;
+  background: var(--sun-400);
+  font-size: clamp(26px, 3.4vw, 40px);
+  letter-spacing: -0.02em;
+  box-shadow: 5px 5px 0 var(--ink);
+  rotate: -3deg;
+}
+
+.pillGhost {
+  display: inline-block;
+  border-style: dashed;
+  background: transparent;
+  box-shadow: none;
+  color: var(--ink);
+  transition: background 0.2s ease;
+}
+
+.pillGhost:hover {
+  background: var(--sun-50);
+}
+
+.pills {
+  align-items: center;
+}
+
+/* Décos des sections : en haut à droite, à côté des titres ; sur téléphone, dans la marge au-dessus */
+.guestsSock {
+  right: 2%;
+  top: -4%;
+  width: clamp(56px, 7vw, 96px);
+  rotate: 22deg;
+}
+
+.infosSock {
+  right: 1%;
+  top: 2%;
+  width: clamp(64px, 9vw, 120px);
+  rotate: -18deg;
+}
+
+.pollCocktail {
+  right: 3%;
+  top: -6%;
+  width: clamp(70px, 9vw, 130px);
+  rotate: 10deg;
+}
+
+.pollSock {
+  right: 18%;
+  top: 4%;
+  width: clamp(56px, 7vw, 100px);
+  rotate: -20deg;
+}
+
+.guestEmpty {
+  max-width: 300px;
+  text-align: right;
+  color: var(--ink);
+}
+
+/* ---------- Playlist ---------- */
+
+.playlist {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(32px, 6vw, 88px);
+  align-items: center;
+  margin-top: clamp(32px, 5vw, 56px);
+}
+
+.vinylWrap {
+  position: relative;
+  width: min(100%, 460px);
+  aspect-ratio: 1;
+  justify-self: center;
+}
+
+.vinylGlow {
+  position: absolute;
+  inset: -8%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--apricot) 0%, rgb(255 138 61 / 0.4) 45%, transparent 70%);
+}
+
+.vinyl {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 33%, rgb(255 255 255 / 0.06) 33.5% 34%, transparent 34.5%),
+    repeating-radial-gradient(circle at 50% 50%, #1d0e05 0 2px, #2b1608 2px 4px),
+    #1d0e05;
+  border: 3px solid var(--ink);
+  animation: spin 3.2s linear infinite;
+}
+
+/* Reflet fixe par-dessus le disque */
+.vinylShine {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 30deg, transparent 0 20%, rgb(255 238 140 / 0.18) 25%, transparent 30% 70%, rgb(255 238 140 / 0.14) 75%, transparent 80%);
+  pointer-events: none;
+}
+
+.vinylLabel {
+  display: grid;
+  place-items: center;
+  width: 36%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--sun);
+  border: 2px solid var(--ink);
+  text-align: center;
+  font-weight: 800;
+  font-size: clamp(14px, 1.6vw, 20px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.vinylLabel small {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.55em;
+  letter-spacing: 0.1em;
+}
+
+.tracks {
+  list-style: none;
+  border-top: 2.5px solid var(--ink);
+}
+
+.track {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 4px;
+  border-bottom: 2px solid rgb(43 22 8 / 0.18);
+}
+
+.trackNum {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--coral);
+}
+
+.trackTitle {
+  font-size: clamp(17px, 1.8vw, 21px);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+
+.trackArtist {
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+
+.songBox {
+  display: grid;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.songForm {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 10px;
+}
+
+.songForm .field {
+  grid-column: 1;
+}
+
+.songForm > p {
+  grid-column: 1 / -1;
+}
+
+.songHint {
+  font-weight: 700;
+}
+
+.songHint a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .songForm {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Outro ---------- */
+
+.outro {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: clamp(96px, 14vw, 180px) var(--gutter) 40px;
+  background: linear-gradient(180deg, var(--sky-8) 0%, var(--night) 100%);
+  overflow: hidden;
+  text-align: center;
+}
+
+.outroTitle {
+  font-size: clamp(64px, 17vw, 260px);
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  color: var(--sun);
+}
+
+.outroTitle span {
+  display: block;
+}
+
+/* La lune qui se lève sur la nuit */
+.outroSun {
+  position: absolute;
+  left: 50%;
+  bottom: -38vmin;
+  width: 76vmin;
+  aspect-ratio: 1;
+  margin-left: -38vmin;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 30%, rgb(255 255 255 / 0.55) 0 8%, transparent 26%),
+    radial-gradient(circle at 62% 22%, rgb(214 196 150 / 0.55) 0 4%, transparent 7%),
+    radial-gradient(circle at 26% 52%, rgb(214 196 150 / 0.5) 0 3%, transparent 6%),
+    linear-gradient(180deg, var(--sun-50), var(--sun-100) 55%, #f3df9e);
+  border: 3px solid var(--ink);
+  box-shadow: 0 0 80px 20px rgb(255 238 140 / 0.22);
+}
+
+/* La nuit qui tombe sur l'outro (opacité pilotée par le scroll) */
+/* Les étoiles, qui s'allument au scroll */
+.outroNight {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.star {
+  position: absolute;
+  background: var(--sun-100);
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.25; transform: scale(0.6); }
+}
+
+.outroContent {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 28px;
+}
+
+.footer {
+  position: absolute;
+  z-index: 3;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.footer span {
+  padding: 7px 14px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--sun-50);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vinyl { animation: none; }
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 800px) {
+  .bento { grid-template-columns: 1fr; }
+  .bento > * { grid-column: auto !important; }
+
+  .rsvp,
+  .playlist {
+    grid-template-columns: 1fr;
+  }
+
+  .dresscode {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .guestCount,
+  .guestEmpty {
+    text-align: left;
+  }
+
+  .guestsSock {
+    right: 0;
+    top: -2%;
+    width: 52px;
+  }
+
+  .infosSock {
+    top: -52px;
+    width: 56px;
+  }
+
+  .pollCocktail {
+    right: 0;
+    top: -66px;
+    width: 58px;
+  }
+
+  .pollSock {
+    right: 70px;
+    top: -54px;
+    width: 48px;
+  }
+
+  .footer span:nth-child(2) {
+    display: none;
+  }
+
+  .countGrid {
+    gap: 8px;
+  }
+
+  .tileLabel {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+
+  .outline {
+    -webkit-text-stroke-width: 3.5px;
+  }
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 3px 3px 0 var(--ink);
+}

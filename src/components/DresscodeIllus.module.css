@@ -1,0 +1,49 @@
+.wrap {
+  position: relative;
+  width: clamp(220px, 26vw, 300px);
+  aspect-ratio: 1.15;
+  filter: drop-shadow(4px 5px 0 rgb(43 22 8 / 0.18));
+}
+
+.tee {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 66%;
+  height: auto;
+  transform: translateX(-50%) rotate(-4deg);
+}
+
+/* Une paire = deux chaussettes légèrement décalées */
+.pair {
+  position: absolute;
+  bottom: 0;
+  width: 34%;
+  aspect-ratio: 150 / 175;
+}
+
+.pairLeft {
+  left: 0;
+  transform: rotate(-14deg);
+}
+
+.pairRight {
+  right: 0;
+  transform: rotate(12deg);
+}
+
+.sockBack,
+.sockFront {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: auto;
+}
+
+.sockBack {
+  transform: translate(-14%, -10%) rotate(-8deg);
+}
+
+.sockFront {
+  transform: translate(6%, 4%);
+}
