@@ -26,5 +26,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
     "typescript": "^5"
-  }
+  },
+  "license": "MIT",
+  "description": "Site d'invitation anim\u00e9 pour une f\u00eate : r\u00e9ponses en direct, qui ram\u00e8ne quoi, playlist, admin"
 }
