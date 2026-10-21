@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { EVENT } from "@/data/event";
-import { SockSmiley } from "../Socks";
-import SockTrigger from "../SockTrigger";
+import { DrinkSpritz } from "../illus/Drinks";
+import DrawerTrigger from "../DrawerTrigger";
 import s from "./sections.module.css";
 
 const TARGET = new Date(EVENT.start).getTime();
@@ -47,9 +47,9 @@ export default function Countdown() {
             </div>
           ))}
         </div>
-        <SockTrigger flip className={s.deco} style={{ right: "2%", top: "-4%", width: "clamp(70px, 10vw, 140px)", rotate: "16deg" }}>
-          <SockSmiley />
-        </SockTrigger>
+        <DrawerTrigger flip className={s.deco} style={{ right: "2%", top: "-4%", width: "clamp(70px, 10vw, 140px)", rotate: "16deg" }}>
+          <DrinkSpritz />
+        </DrawerTrigger>
       </div>
     </section>
   );

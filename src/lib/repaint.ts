@@ -2,7 +2,7 @@
 
 /*
  * Safari (iPhone surtout) ne dessine pas les motifs SVG <pattern> placés sous une ombre CSS (drop-shadow)
- * tant que l'écran n'est pas rafraîchi : les chaussettes paraissent unies jusqu'au premier scroll.
+ * tant que l'écran n'est pas rafraîchi : les illustrations paraissent unies jusqu'au premier scroll.
  * On force ce rafraîchissement en retouchant le remplissage des formes à motif.
  */
 export function repaintPatterns(root: ParentNode = document) {

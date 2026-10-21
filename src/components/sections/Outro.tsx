@@ -1,6 +1,7 @@
-import { SockLeopard, SockToes } from "../Socks";
+import { DrinkEspressoMartini, DrinkPinaColada } from "../illus/Drinks";
+import { DRAWER } from "../drawerItems";
 import { EVENT } from "@/data/event";
-import SockTrigger from "../SockTrigger";
+import DrawerTrigger from "../DrawerTrigger";
 import CalendarButtons from "../CalendarButtons";
 import s from "./sections.module.css";
 
@@ -39,17 +40,17 @@ export default function Outro() {
         </h2>
         <CalendarButtons rowClass={`${s.btnRow} ${s.btnRowCenter}`} className={s.btn} primaryClass={s.btnPrimary} />
       </div>
-      <SockTrigger className={s.deco} style={{ left: "8%", top: "16%", width: "clamp(70px, 9vw, 130px)", rotate: "-16deg" }}>
-        <SockLeopard />
-      </SockTrigger>
-      <SockTrigger flip className={s.deco} style={{ right: "8%", top: "26%", width: "clamp(60px, 8vw, 110px)", rotate: "20deg" }}>
-        <SockToes />
-      </SockTrigger>
+      <DrawerTrigger className={s.deco} style={{ left: "8%", top: "16%", width: "clamp(70px, 9vw, 130px)", rotate: "-16deg" }}>
+        <DrinkEspressoMartini />
+      </DrawerTrigger>
+      <DrawerTrigger flip className={s.deco} style={{ right: "8%", top: "26%", width: "clamp(60px, 8vw, 110px)", rotate: "20deg" }}>
+        <DrinkPinaColada />
+      </DrawerTrigger>
       <footer className={s.footer}>
         <span>
           {EVENT.name} ☀︎ {EVENT.age} ans
         </span>
-        <span>psst, les chaussettes sont cliquables</span>
+        <span>{DRAWER.hint}</span>
         <span>{EVENT.dateFull}</span>
       </footer>
     </section>

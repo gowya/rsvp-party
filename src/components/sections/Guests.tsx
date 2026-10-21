@@ -2,8 +2,8 @@
 
 import { EVENT } from "@/data/event";
 import { useLive } from "@/lib/live";
-import { SockSport } from "../Socks";
-import SockTrigger from "../SockTrigger";
+import { DrinkChampagne } from "../illus/Drinks";
+import DrawerTrigger from "../DrawerTrigger";
 import s from "./sections.module.css";
 
 const COLORS = ["var(--rose)", "var(--sun-400)", "var(--mint)", "var(--lilac)", "var(--apricot)", "var(--sun-50)"];
@@ -69,9 +69,9 @@ export default function Guests() {
           )}
         </ul>
 
-        <SockTrigger flip className={`${s.deco} ${s.guestsSock}`}>
-          <SockSport />
-        </SockTrigger>
+        <DrawerTrigger flip className={`${s.deco} ${s.guestsDeco}`}>
+          <DrinkChampagne />
+        </DrawerTrigger>
       </div>
     </section>
   );

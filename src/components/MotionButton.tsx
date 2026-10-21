@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
-import { rainSocks, requestMotionPermission } from "@/lib/motion";
+import { rainItems, requestMotionPermission } from "@/lib/motion";
 
 const TOUCH = "(pointer: coarse)";
 const subscribe = (cb: () => void) => {
@@ -13,7 +13,7 @@ const subscribe = (cb: () => void) => {
 const LABELS = {
   idle: "✨ Active les paillettes",
   on: "Penche ton tel… et secoue-le 👀",
-  denied: "Pas grave, tape sur les chaussettes 🧦",
+  denied: "Pas grave, tape sur les cocktails 🍹",
 };
 
 // Sur téléphone : débloque le gyroscope et l'accéléromètre (obligatoire sur iPhone), puis fait une démo
@@ -25,12 +25,12 @@ export default function MotionButton({ className }: { className?: string }) {
 
   const onClick = async () => {
     if (state !== "idle") {
-      rainSocks();
+      rainItems();
       return;
     }
     const granted = await requestMotionPermission();
     setState(granted ? "on" : "denied");
-    if (granted) rainSocks();
+    if (granted) rainItems();
   };
 
   return (

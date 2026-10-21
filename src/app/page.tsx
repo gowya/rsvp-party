@@ -1,6 +1,6 @@
 import Intro from "@/components/Intro";
-import SockDrawer from "@/components/SockDrawer";
-import SockRain from "@/components/SockRain";
+import EasterDrawer from "@/components/EasterDrawer";
+import ItemRain from "@/components/ItemRain";
 import MotionController from "@/components/MotionController";
 import ScrollScenes from "@/components/ScrollScenes";
 import SmoothAnchors from "@/components/SmoothAnchors";
@@ -26,8 +26,8 @@ export default function Home() {
       <Outro />
 
       {/* Couches d'effets par-dessus la page */}
-      <SockRain />
-      <SockDrawer />
+      <ItemRain />
+      <EasterDrawer />
       <MotionController />
       <ScrollScenes />
       <SmoothAnchors />

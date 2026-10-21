@@ -1,11 +1,11 @@
 "use client";
 
 import type { CSSProperties, ReactNode } from "react";
-import { openSockDrawer } from "./sockLibrary";
-import { SockFlip } from "./Socks";
+import { DRAWER, openDrawer } from "./drawerItems";
+import { Mirror } from "./illus/shared";
 
-// Une chaussette décorative qui ouvre le tiroir quand on clique dessus
-export default function SockTrigger({
+// Un objet décoratif qui ouvre le tiroir de l'easter egg quand on clique dessus
+export default function DrawerTrigger({
   className,
   style,
   flip = false,
@@ -21,10 +21,10 @@ export default function SockTrigger({
       type="button"
       className={className}
       style={{ background: "none", border: 0, padding: 0, cursor: "pointer", pointerEvents: "auto", ...style }}
-      onClick={openSockDrawer}
-      aria-label="Ouvrir le tiroir à chaussettes"
+      onClick={openDrawer}
+      aria-label={DRAWER.open}
     >
-      <SockFlip value={flip}>{children}</SockFlip>
+      <Mirror flip={flip}>{children}</Mirror>
     </button>
   );
 }

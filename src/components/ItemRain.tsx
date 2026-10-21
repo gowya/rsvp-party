@@ -2,17 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { SOCK_RAIN_EVENT } from "@/lib/motion";
-import { SOCK_LIBRARY } from "./sockLibrary";
-import { SockFlip } from "./Socks";
+import { ITEM_RAIN_EVENT } from "@/lib/motion";
+import { DRAWER_ITEMS } from "./drawerItems";
+import { Mirror } from "./illus/shared";
 import { repaintPatternsSoon } from "@/lib/repaint";
 
-type Drop = { id: number; sock: number; left: number; size: number; flip: boolean; pile: number; rot: number };
+type Drop = { id: number; item: number; left: number; size: number; flip: boolean; pile: number; rot: number };
 
 let nextId = 0;
 
-// Secouer le téléphone : une pluie de chaussettes qui s'empilent en bas de l'écran
-export default function SockRain() {
+// Secouer le téléphone : une pluie d'objets (cocktails) qui s'empilent en bas de l'écran
+export default function ItemRain() {
   const root = useRef<HTMLDivElement>(null);
   const [drops, setDrops] = useState<Drop[]>([]);
   const raining = useRef(false);
@@ -25,7 +25,7 @@ export default function SockRain() {
       setDrops(
         Array.from({ length: count }, () => ({
           id: nextId++,
-          sock: Math.floor(Math.random() * SOCK_LIBRARY.length),
+          item: Math.floor(Math.random() * DRAWER_ITEMS.length),
           left: Math.random() * 100,
           size: gsap.utils.random(64, 110),
           flip: Math.random() < 0.5,
@@ -35,8 +35,8 @@ export default function SockRain() {
       );
       if (navigator.vibrate) navigator.vibrate(80);
     };
-    window.addEventListener(SOCK_RAIN_EVENT, onRain);
-    return () => window.removeEventListener(SOCK_RAIN_EVENT, onRain);
+    window.addEventListener(ITEM_RAIN_EVENT, onRain);
+    return () => window.removeEventListener(ITEM_RAIN_EVENT, onRain);
   }, []);
 
   useGSAP(
@@ -53,7 +53,7 @@ export default function SockRain() {
       });
       els.forEach((el, i) => {
         const d = drops[i];
-        // Plus la chaussette tombe tard, plus elle se pose haut sur la pile
+        // Plus l'objet tombe tard, plus elle se pose haut sur la pile
         const land = h - d.size * 0.8 - d.pile * Math.min(140, h * 0.18) - (i / els.length) * 40;
         tl.fromTo(
           el,
@@ -70,7 +70,7 @@ export default function SockRain() {
   return (
     <div ref={root} aria-hidden="true" style={{ position: "fixed", inset: 0, zIndex: 85, pointerEvents: "none", overflow: "hidden" }}>
       {drops.map((d) => {
-        const Comp = SOCK_LIBRARY[d.sock].Comp;
+        const Comp = DRAWER_ITEMS[d.item].Comp;
         return (
           <div
             key={d.id}
@@ -84,9 +84,9 @@ export default function SockRain() {
               transform: "translateY(-200px)",
             }}
           >
-            <SockFlip value={d.flip}>
+            <Mirror flip={d.flip}>
               <Comp />
-            </SockFlip>
+            </Mirror>
           </div>
         );
       })}

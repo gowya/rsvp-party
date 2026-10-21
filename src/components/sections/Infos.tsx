@@ -1,9 +1,9 @@
 import CalendarButtons from "../CalendarButtons";
 import DresscodeIllus from "../DresscodeIllus";
 import PlaceCard from "./PlaceCard";
-import { SockMelon } from "../Socks";
+import { DrinkMargarita } from "../illus/Drinks";
 import { EVENT } from "@/data/event";
-import SockTrigger from "../SockTrigger";
+import DrawerTrigger from "../DrawerTrigger";
 import s from "./sections.module.css";
 
 export default function Infos() {
@@ -34,16 +34,16 @@ export default function Infos() {
                 Code couleur : <span className={s.yellowMark}>jaune</span>
               </p>
               <p className={s.cardText}>
-                Du jaune sur toi, un peu ou beaucoup. Chaussette folle en extra.
+                Du jaune sur toi, un peu ou beaucoup.
               </p>
             </div>
             <DresscodeIllus />
           </article>
         </div>
 
-        <SockTrigger className={`${s.deco} ${s.infosSock}`}>
-          <SockMelon />
-        </SockTrigger>
+        <DrawerTrigger className={`${s.deco} ${s.infosDeco}`}>
+          <DrinkMargarita />
+        </DrawerTrigger>
       </div>
     </section>
   );

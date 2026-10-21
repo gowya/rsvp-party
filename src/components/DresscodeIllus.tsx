@@ -1,11 +1,12 @@
 "use client";
 
-import { INK, SockFlip, SockMelon, SockSmiley } from "./Socks";
+import { DrinkMargarita, DrinkSpritz } from "./illus/Drinks";
+import { INK } from "./illus/shared";
 import s from "./DresscodeIllus.module.css";
 
 const o = { stroke: INK, strokeWidth: 3, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
 
-// Le look du dress code, posé à plat : un t-shirt jaune et deux paires de chaussettes
+// Le look du dress code, posé à plat : un t-shirt jaune entre deux cocktails
 export default function DresscodeIllus({ className }: { className?: string }) {
   return (
     <div className={`${s.wrap} ${className ?? ""}`} aria-hidden="true">
@@ -19,18 +20,8 @@ export default function DresscodeIllus({ className }: { className?: string }) {
         <path d="M64 16 C72 30 128 30 136 16" fill="none" stroke="#f2b53a" strokeWidth="7" strokeLinecap="round" />
         <path d="M64 16 C72 30 128 30 136 16" fill="none" {...o} />
       </svg>
-
-      <div className={`${s.pair} ${s.pairLeft}`}>
-        <SockSmiley className={s.sockBack} />
-        <SockSmiley className={s.sockFront} />
-      </div>
-
-      <div className={`${s.pair} ${s.pairRight}`}>
-        <SockFlip value>
-          <SockMelon className={s.sockBack} />
-          <SockMelon className={s.sockFront} />
-        </SockFlip>
-      </div>
+      <DrinkMargarita className={`${s.drink} ${s.drinkLeft}`} />
+      <DrinkSpritz className={`${s.drink} ${s.drinkRight}`} />
     </div>
   );
 }

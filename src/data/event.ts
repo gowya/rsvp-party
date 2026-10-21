@@ -4,8 +4,8 @@ const BASE = {
   name: "Camille",
   age: 30,
   // Heure locale avec décalage. La fin est une estimation pour l'agenda.
-  start: "2027-06-12T20:00:00+02:00",
-  end: "2027-06-13T02:00:00+02:00",
+  start: "2026-10-31T20:00:00+01:00",
+  end: "2026-11-01T02:00:00+01:00",
   timeZone: "Europe/Paris",
   place: "Chez moi",
   city: "Montreuil",

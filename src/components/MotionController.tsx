@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
-import { motion, rainSocks } from "@/lib/motion";
+import { motion, rainItems } from "@/lib/motion";
 import { repaintPatternsSoon } from "@/lib/repaint";
 
 const clamp = gsap.utils.clamp(-1, 1);
@@ -11,11 +11,11 @@ const clamp = gsap.utils.clamp(-1, 1);
  * Chef d'orchestre du mouvement :
  * - inclinaison : gyroscope sur téléphone, souris sur ordinateur, lissée puis écrite en variables CSS sur le hero
  * - vitesse de scroll : fait tourner la boule disco plus vite
- * - secousse du téléphone : pluie de chaussettes
+ * - secousse du téléphone : pluie d'objets (easter egg)
  */
 export default function MotionController() {
   useEffect(() => {
-    // Motifs des chaussettes dessinés dès le chargement (contournement Safari)
+    // Motifs SVG dessinés dès le chargement (contournement Safari)
     repaintPatternsSoon();
     const onLoad = () => repaintPatternsSoon();
     window.addEventListener("load", onLoad, { once: true });
@@ -53,7 +53,7 @@ export default function MotionController() {
           if (jolts.length >= 3 && now > cooldownUntil) {
             cooldownUntil = now + 6000;
             jolts = [];
-            rainSocks();
+            rainItems();
           }
         }
       }

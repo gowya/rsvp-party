@@ -2,22 +2,22 @@
 
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
-import { OPEN_DRAWER_EVENT, SOCK_LIBRARY } from "./sockLibrary";
-import { SockFlip } from "./Socks";
+import { DRAWER, DRAWER_ITEMS, OPEN_DRAWER_EVENT } from "./drawerItems";
+import { Mirror } from "./illus/shared";
 import { repaintPatternsSoon } from "@/lib/repaint";
-import s from "./SockDrawer.module.css";
+import s from "./EasterDrawer.module.css";
 
 type Drag = { startY: number; startP: number; lastY: number; lastT: number; v: number; moved: boolean; h: number; ac: AbortController };
 
 const clamp01 = gsap.utils.clamp(0, 1);
-const shuffleFlips = () => SOCK_LIBRARY.map(() => Math.random() < 0.5);
+const shuffleFlips = () => DRAWER_ITEMS.map(() => Math.random() < 0.5);
 
 /*
- * Le tiroir à chaussettes, un easter egg : il se découvre au tap sur une chaussette.
+ * Le tiroir de l'easter egg : il se découvre au tap sur un objet décoratif du site.
  * Une fois découvert, sa poignée reste en bas de l'écran pour le rouvrir au doigt.
  * On le referme en le tirant vers le bas, en tapant à côté ou avec Échap.
  */
-export default function SockDrawer() {
+export default function EasterDrawer() {
   const root = useRef<HTMLDivElement>(null);
   const handle = useRef<HTMLButtonElement>(null);
   const overlay = useRef<HTMLDivElement>(null);
@@ -30,7 +30,7 @@ export default function SockDrawer() {
   const inZone = useRef(false);
   const [open, setOpen] = useState(false);
   const [flips, setFlips] = useState<boolean[]>([]);
-  // Les 22 chaussettes ne sont construites qu'à la première découverte (page plus légère au chargement)
+  // Les objets du tiroir ne sont construits qu'à la première découverte (page plus légère au chargement)
   const [ready, setReady] = useState(false);
   const [popKey, setPopKey] = useState(0);
 
@@ -76,7 +76,7 @@ export default function SockDrawer() {
     animateTo(1);
   };
 
-  // Les chaussettes tombent dans le tiroir à chaque ouverture au tap (après leur rendu)
+  // Les objets tombent dans le tiroir à chaque ouverture au tap (après leur rendu)
   useGSAP(
     () => {
       if (!popKey) return;
@@ -96,7 +96,7 @@ export default function SockDrawer() {
     { scope: root, dependencies: [popKey] },
   );
 
-  // Ouverture au tap sur une chaussette du site
+  // Ouverture au tap sur un objet du site
   useEffect(() => {
     const onOpen = () => openWithPop();
     window.addEventListener(OPEN_DRAWER_EVENT, onOpen);
@@ -195,9 +195,9 @@ export default function SockDrawer() {
 
   return (
     <div ref={root}>
-      <button ref={handle} type="button" className={s.handle} onPointerDown={onStart} aria-label="Ouvrir le tiroir à chaussettes">
+      <button ref={handle} type="button" className={s.handle} onPointerDown={onStart} aria-label={DRAWER.open}>
         <span className={s.handleKnob} aria-hidden="true" />
-        <span className={s.handleLabel}>🧦 tire-moi</span>
+        <span className={s.handleLabel}>{DRAWER.handle}</span>
       </button>
 
       <div ref={overlay} className={s.overlay} role="dialog" aria-modal="true" aria-hidden={!open} aria-labelledby="drawer-title">
@@ -209,20 +209,20 @@ export default function SockDrawer() {
               <div>
                 <p className={s.kicker}>✦ Easter egg débloqué</p>
                 <h2 id="drawer-title" className={s.title}>
-                  Mon tiroir à chaussettes
+                  {DRAWER.title}
                 </h2>
-                <p className={s.sub}>{SOCK_LIBRARY.length} paires. Oui, je sais.</p>
+                <p className={s.sub}>{DRAWER.subtitle(DRAWER_ITEMS.length)}</p>
               </div>
             </header>
           </div>
           <div className={s.body}>
             {ready && (
               <ul className={s.grid}>
-                {SOCK_LIBRARY.map(({ key, label, Comp }, i) => (
+                {DRAWER_ITEMS.map(({ key, label, Comp }, i) => (
                   <li key={key} className={s.item}>
-                    <SockFlip value={flips[i] ?? false}>
-                      <Comp className={s.sock} />
-                    </SockFlip>
+                    <Mirror flip={flips[i] ?? false}>
+                      <Comp className={s.art} />
+                    </Mirror>
                     <span className={s.label}>{label}</span>
                   </li>
                 ))}

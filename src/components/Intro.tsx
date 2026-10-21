@@ -8,8 +8,8 @@ import Image from "next/image";
 import { EVENT } from "@/data/event";
 import PhotoPlaceholder from "./PhotoPlaceholder";
 import { CocktailPornstar } from "./Cocktails";
-import { openSockDrawer } from "./sockLibrary";
-import { SockFlames, SockFlip, SockLeopard, SockMelon, SockSmiley, SockToes } from "./Socks";
+import { DRAWER, openDrawer } from "./drawerItems";
+import { DrinkCosmopolitan, DrinkMargarita, DrinkNegroni, DrinkPinaColada, DrinkSpritz } from "./illus/Drinks";
 import MotionButton from "./MotionButton";
 import { markIntroDone } from "@/lib/motion";
 import s from "./Intro.module.css";
@@ -19,12 +19,12 @@ gsap.registerPlugin(useGSAP);
 const NAME = EVENT.name.toUpperCase();
 const CTA_TEXT = "CONFIRME TA PRÉSENCE ✦ CONFIRME TA PRÉSENCE ✦ ";
 
-const SOCKS = [
-  { slot: s.sock1, Comp: SockToes, flip: false, depth: 1.3 },
-  { slot: s.sock2, Comp: SockLeopard, flip: true, depth: 1 },
-  { slot: s.sock3, Comp: SockMelon, flip: true, depth: 1.2 },
-  { slot: s.sock4, Comp: SockSmiley, flip: false, depth: 0.6 },
-  { slot: s.sock5, Comp: SockFlames, flip: true, depth: 0.5 },
+const ITEMS = [
+  { slot: s.slot1, Comp: DrinkSpritz, depth: 1.3 },
+  { slot: s.slot2, Comp: DrinkMargarita, depth: 1 },
+  { slot: s.slot3, Comp: DrinkPinaColada, depth: 1.2 },
+  { slot: s.slot4, Comp: DrinkCosmopolitan, depth: 0.6 },
+  { slot: s.slot5, Comp: DrinkNegroni, depth: 0.5 },
 ];
 
 export default function Intro() {
@@ -50,7 +50,7 @@ export default function Intro() {
         gsap.set(`.${s.string}`, { scaleY: 0 });
         gsap.set(`.${s.badge}`, { scale: 0, rotate: -40 });
         gsap.set(`.${s.photo}`, { yPercent: -60, rotate: -25, autoAlpha: 0 });
-        gsap.set(`.${s.sock}`, { scale: 0, rotate: "-=50" });
+        gsap.set(`.${s.item}`, { scale: 0, rotate: "-=50" });
         gsap.set(`.${s.reveal}`, { y: 24, autoAlpha: 0 });
 
         const progress = { v: 0 };
@@ -74,13 +74,13 @@ export default function Intro() {
           .to(`.${s.letter}`, { yPercent: 0, duration: 0.7, stagger: 0.05 }, "<0.1")
           .to(`.${s.badge}`, { scale: 1, rotate: -8, duration: 0.6, ease: "back.out(2.5)" }, "-=0.45")
           .to(`.${s.photo}`, { yPercent: 0, rotate: 6, autoAlpha: 1, duration: 0.8, ease: "elastic.out(1, 0.6)" }, "<")
-          .to(`.${s.sock}`, { scale: 1, rotate: "+=50", duration: 0.7, stagger: 0.05, ease: "back.out(2)" }, "<-0.3")
+          .to(`.${s.item}`, { scale: 1, rotate: "+=50", duration: 0.7, stagger: 0.05, ease: "back.out(2)" }, "<-0.3")
           .to(`.${s.reveal}`, { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.08, clearProps: "transform" }, "<0.1")
           .add(() => {
             html.style.overflow = "";
             markIntroDone();
-            // Les chaussettes flottent ensuite en continu
-            gsap.utils.toArray<HTMLElement>(`.${s.sock}`).forEach((el, i) => {
+            // Les objets flottent ensuite en continu
+            gsap.utils.toArray<HTMLElement>(`.${s.item}`).forEach((el, i) => {
               gsap.to(el, {
                 y: gsap.utils.random(-14, -6),
                 rotate: `+=${i % 2 ? 7 : -7}`,
@@ -155,19 +155,17 @@ export default function Intro() {
           </figure>
         </div>
 
-        {SOCKS.map(({ slot, Comp, flip, depth }, i) => (
-          <div key={i} className={`${s.sockSlot} ${slot}`} style={{ "--depth": depth } as CSSProperties}>
-            <button type="button" className={s.sock} onClick={openSockDrawer} aria-label="Ouvrir le tiroir à chaussettes">
-              <SockFlip value={flip}>
-                <Comp />
-              </SockFlip>
+        {ITEMS.map(({ slot, Comp, depth }, i) => (
+          <div key={i} className={`${s.itemSlot} ${slot}`} style={{ "--depth": depth } as CSSProperties}>
+            <button type="button" className={s.item} onClick={openDrawer} aria-label={DRAWER.open}>
+              <Comp />
             </button>
           </div>
         ))}
-        <div className={`${s.sockSlot} ${s.sock6}`} style={{ "--depth": 0.8 } as CSSProperties}>
-          <div className={s.sock}>
+        <div className={`${s.itemSlot} ${s.slot6}`} style={{ "--depth": 0.8 } as CSSProperties}>
+          <button type="button" className={s.item} onClick={openDrawer} aria-label={DRAWER.open}>
             <CocktailPornstar />
-          </div>
+          </button>
         </div>
 
         <div className={`${s.info} ${s.reveal}`}>

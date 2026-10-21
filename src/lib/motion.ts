@@ -14,7 +14,7 @@ export const motion = {
   introDone: false,
 };
 
-export const SOCK_RAIN_EVENT = "sock-rain";
+export const ITEM_RAIN_EVENT = "item-rain";
 export const INTRO_DONE_EVENT = "intro:done";
 
 export function markIntroDone() {
@@ -23,8 +23,8 @@ export function markIntroDone() {
   window.dispatchEvent(new Event(INTRO_DONE_EVENT));
 }
 
-export function rainSocks() {
-  window.dispatchEvent(new Event(SOCK_RAIN_EVENT));
+export function rainItems() {
+  window.dispatchEvent(new Event(ITEM_RAIN_EVENT));
 }
 
 type PermissionApi = { requestPermission?: () => Promise<"granted" | "denied"> };

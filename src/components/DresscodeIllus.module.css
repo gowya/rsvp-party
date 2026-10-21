@@ -14,36 +14,19 @@
   transform: translateX(-50%) rotate(-4deg);
 }
 
-/* Une paire = deux chaussettes légèrement décalées */
-.pair {
+.drink {
   position: absolute;
   bottom: 0;
   width: 34%;
-  aspect-ratio: 150 / 175;
-}
-
-.pairLeft {
-  left: 0;
-  transform: rotate(-14deg);
-}
-
-.pairRight {
-  right: 0;
-  transform: rotate(12deg);
-}
-
-.sockBack,
-.sockFront {
-  position: absolute;
-  inset: 0;
-  width: 100%;
   height: auto;
 }
 
-.sockBack {
-  transform: translate(-14%, -10%) rotate(-8deg);
+.drinkLeft {
+  left: 0;
+  transform: rotate(-12deg);
 }
 
-.sockFront {
-  transform: translate(6%, 4%);
+.drinkRight {
+  right: 0;
+  transform: rotate(10deg);
 }

@@ -1,64 +1,10 @@
 "use client";
 
-import { useId } from "react";
-import { INK, Sparkle } from "./Socks";
-
-const o = { stroke: INK, strokeWidth: 2.6, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
-const thin = { ...o, strokeWidth: 1.6 };
+import { CitrusWheel, INK, Ice, Mint, Sparkle, Straw, o, thin } from "./illus/shared";
 
 type P = { className?: string };
 
-function Ice({ x, y, r = 0, s = 1 }: { x: number; y: number; r?: number; s?: number }) {
-  return (
-    <g transform={`translate(${x} ${y}) rotate(${r}) scale(${s})`}>
-      <rect x="-9" y="-9" width="18" height="18" rx="4" fill="#f4fbff" fillOpacity="0.85" {...thin} />
-      <path d="M-5 -5 L-1 -5" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-    </g>
-  );
-}
-
-function Mint({ x, y, r = 0, s = 1 }: { x: number; y: number; r?: number; s?: number }) {
-  return (
-    <g transform={`translate(${x} ${y}) rotate(${r}) scale(${s})`}>
-      <path d="M0 -10 C8 -6 8 6 0 10 C-8 6 -8 -6 0 -10 Z" fill="#3fbf6f" {...thin} />
-      <path d="M0 -8 V8 M0 -2 L3.5 -5 M0 3 L-3.5 0" stroke="#1f7a43" strokeWidth="1.1" fill="none" strokeLinecap="round" />
-    </g>
-  );
-}
-
-function LimeWheel({ x, y, r = 14 }: { x: number; y: number; r?: number }) {
-  return (
-    <g transform={`translate(${x} ${y})`}>
-      <circle r={r} fill="#8ccf3f" {...o} />
-      <circle r={r * 0.78} fill="#e3f59a" />
-      {Array.from({ length: 8 }, (_, i) => (
-        <line
-          key={i}
-          x1="0" y1="0" x2="0" y2={-r * 0.72}
-          transform={`rotate(${i * 45})`}
-          stroke="#b5df5a" strokeWidth="1.6"
-        />
-      ))}
-      <circle r={r * 0.12} fill="#b5df5a" />
-    </g>
-  );
-}
-
-function Straw({ x1, y1, x2, y2, a, b }: { x1: number; y1: number; x2: number; y2: number; a: string; b: string }) {
-  const id = useId().replace(/:/g, "");
-  return (
-    <>
-      <defs>
-        <pattern id={`s${id}`} width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <rect width="10" height="10" fill={a} />
-          <rect width="5" height="10" fill={b} />
-        </pattern>
-      </defs>
-      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={INK} strokeWidth="11" strokeLinecap="round" />
-      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={`url(#s${id})`} strokeWidth="6.5" strokeLinecap="round" />
-    </>
-  );
-}
+const LimeWheel = (p: { x: number; y: number; r?: number }) => <CitrusWheel {...p} />;
 
 /* Pornstar martini : coupe, mousse, demi fruit de la passion et son shot de prosecco */
 export function CocktailPornstar({ className }: P) {

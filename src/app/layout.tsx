@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     siteName: EVENT.title,
     title: `${TITLE} ☀︎`,
     description: DESCRIPTION,
-    images: [{ url: "/apercu.jpg", width: 800, height: 800, type: "image/jpeg", alt: `${EVENT.title} : une boule disco, « ${EVENT.age} ans » en géant et des chaussettes à motifs` }],
+    images: [{ url: "/apercu.jpg", width: 800, height: 800, type: "image/jpeg", alt: `${EVENT.title} : une boule disco, « ${EVENT.age} ans » en géant et des cocktails` }],
   },
   twitter: { card: "summary_large_image", title: `${TITLE} ☀︎`, description: DESCRIPTION, images: ["/apercu.jpg"] },
 };

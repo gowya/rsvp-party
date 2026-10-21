@@ -656,14 +656,14 @@
 }
 
 /* Décos des sections : en haut à droite, à côté des titres ; sur téléphone, dans la marge au-dessus */
-.guestsSock {
+.guestsDeco {
   right: 2%;
   top: -4%;
   width: clamp(56px, 7vw, 96px);
   rotate: 22deg;
 }
 
-.infosSock {
+.infosDeco {
   right: 1%;
   top: 2%;
   width: clamp(64px, 9vw, 120px);
@@ -677,7 +677,7 @@
   rotate: 10deg;
 }
 
-.pollSock {
+.pollDeco {
   right: 18%;
   top: 4%;
   width: clamp(56px, 7vw, 100px);
@@ -955,13 +955,13 @@
     text-align: left;
   }
 
-  .guestsSock {
+  .guestsDeco {
     right: 0;
     top: -2%;
     width: 52px;
   }
 
-  .infosSock {
+  .infosDeco {
     top: -52px;
     width: 56px;
   }
@@ -972,7 +972,7 @@
     width: 58px;
   }
 
-  .pollSock {
+  .pollDeco {
     right: 70px;
     top: -54px;
     width: 48px;

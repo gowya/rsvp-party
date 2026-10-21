@@ -4,8 +4,8 @@ import { useState } from "react";
 import { saveBrings, useLive } from "@/lib/live";
 import { MAX_OTHERS_PER_GUEST, OTHER_MAX, POLL_ITEMS } from "@/lib/poll";
 import { CocktailCubaLibre } from "../Cocktails";
-import { SockFlames } from "../Socks";
-import SockTrigger from "../SockTrigger";
+import { DrinkTequilaSunrise } from "../illus/Drinks";
+import DrawerTrigger from "../DrawerTrigger";
 import s from "./sections.module.css";
 
 // Qui ramène quoi : on coche après avoir répondu, les prénoms ne sont visibles que dans l'admin
@@ -67,9 +67,9 @@ export default function Poll() {
         <div className={`${s.deco} ${s.pollCocktail}`}>
           <CocktailCubaLibre />
         </div>
-        <SockTrigger flip className={`${s.deco} ${s.pollSock}`}>
-          <SockFlames />
-        </SockTrigger>
+        <DrawerTrigger flip className={`${s.deco} ${s.pollDeco}`}>
+          <DrinkTequilaSunrise />
+        </DrawerTrigger>
 
         {!canPick && (
           <p className={s.pollGate}>

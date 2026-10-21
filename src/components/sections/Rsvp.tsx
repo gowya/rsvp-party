@@ -78,7 +78,7 @@ export default function Rsvp() {
               {EVENT.photos.rsvp ? (
                 <Image src={EVENT.photos.rsvp.src} alt={EVENT.photos.rsvp.alt} fill sizes="(max-width: 800px) 60vw, 280px" />
               ) : (
-                <PhotoPlaceholder variant="cheers" />
+                <PhotoPlaceholder variant="yay" />
               )}
             </div>
             <figcaption className={s.hand}>moi quand tu dis oui</figcaption>
