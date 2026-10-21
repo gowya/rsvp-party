@@ -41,7 +41,7 @@ export type EventConfig = {
     revealAddress: "after-rsvp" | "always";
   };
 
-  // Thème visuel (couleurs, polices, illustrations, animation signature)
+  // Thème visuel : couleurs, polices, textes, illustrations, animation signature (src/themes/)
   theme: "disco";
 
   // Photos dans /public (null : une illustration les remplace)

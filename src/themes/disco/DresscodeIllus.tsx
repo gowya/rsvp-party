@@ -1,7 +1,7 @@
 "use client";
 
 import { DrinkMargarita, DrinkSpritz } from "./illus/Drinks";
-import { INK } from "./illus/shared";
+import { INK } from "@/components/illus/shared";
 import s from "./DresscodeIllus.module.css";
 
 const o = { stroke: INK, strokeWidth: 3, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };

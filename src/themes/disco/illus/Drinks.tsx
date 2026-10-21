@@ -17,7 +17,7 @@ import {
   Twist,
   Umbrella,
   o,
-} from "./shared";
+} from "@/components/illus/shared";
 
 /*
  * Un cocktail = un verre + un liquide (dégradé) + des glaçons + des garnitures.

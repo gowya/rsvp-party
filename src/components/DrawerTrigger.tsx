@@ -1,7 +1,8 @@
 "use client";
 
 import type { CSSProperties, ReactNode } from "react";
-import { DRAWER, openDrawer } from "./drawerItems";
+import { openDrawer } from "./drawer";
+import { THEME } from "@/themes";
 import { EVENT } from "@/data/event";
 import { Mirror } from "./illus/shared";
 
@@ -32,7 +33,7 @@ export default function DrawerTrigger({
       className={className}
       style={{ background: "none", border: 0, padding: 0, cursor: "pointer", pointerEvents: "auto", ...style }}
       onClick={openDrawer}
-      aria-label={DRAWER.open}
+      aria-label={THEME.easterEgg.open}
     >
       <Mirror flip={flip}>{children}</Mirror>
     </button>

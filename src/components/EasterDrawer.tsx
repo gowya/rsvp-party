@@ -2,7 +2,11 @@
 
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
-import { DRAWER, DRAWER_ITEMS, OPEN_DRAWER_EVENT } from "./drawerItems";
+import { OPEN_DRAWER_EVENT } from "./drawer";
+import { THEME } from "@/themes";
+
+const DRAWER = THEME.easterEgg;
+const DRAWER_ITEMS = THEME.easterEgg.items;
 import { Mirror } from "./illus/shared";
 import { repaintPatternsSoon } from "@/lib/repaint";
 import s from "./EasterDrawer.module.css";

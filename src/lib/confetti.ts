@@ -1,8 +1,9 @@
 "use client";
 
 import { gsap, prefersReducedMotion } from "./gsap";
+import { THEME } from "@/themes";
 
-const COLORS = ["#ffd95a", "#ffb347", "#ff8a3d", "#ff6b4a", "#fffbe6", "#5fd3b5", "#b9a4ff"];
+const COLORS = THEME.confetti;
 
 let layer: HTMLDivElement | null = null;
 

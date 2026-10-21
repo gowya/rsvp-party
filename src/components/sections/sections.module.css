@@ -10,11 +10,11 @@
 
 /* Sections sombres : les textes passent en crème */
 .dark {
-  color: var(--sun-50);
+  color: var(--paper);
 }
 
 .dark .tracks {
-  border-top-color: var(--sun-50);
+  border-top-color: var(--paper);
 }
 
 .dark .track {
@@ -22,7 +22,7 @@
 }
 
 .dark .label {
-  color: var(--sun-100);
+  color: var(--paper-2);
 }
 
 /* Poubelle sur ses propres sons */
@@ -54,13 +54,13 @@
 }
 
 .dark .trackNum {
-  color: var(--sun-400);
+  color: var(--brand-strong);
 }
 
 /* Quand le ciel devient orange puis sombre, les titres passent aux jaunes du soleil */
 .warm .sunset,
 .dark .sunset {
-  background-image: linear-gradient(180deg, var(--sun-50) 10%, var(--sun) 50%, var(--sun-400) 90%);
+  background-image: linear-gradient(180deg, var(--paper) 10%, var(--brand) 50%, var(--brand-strong) 90%);
 }
 
 .wrap {
@@ -88,7 +88,7 @@
 }
 
 .outline {
-  color: var(--sun-50);
+  color: var(--paper);
   -webkit-text-stroke: 5px var(--ink);
   paint-order: stroke fill;
 }
@@ -99,7 +99,7 @@
   padding: 0.12em 0.08em 0.16em 0.02em;
   margin: -0.12em -0.08em -0.16em -0.02em;
   /* Les orangés du soleil couchant du hero */
-  background: linear-gradient(180deg, #ffa13a 12%, var(--tangerine) 52%, var(--coral) 90%);
+  background: linear-gradient(180deg, #ffa13a 12%, var(--accent-mid) 52%, var(--accent) 90%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -111,7 +111,7 @@
   padding: clamp(20px, 3vw, 32px);
   border: 2.5px solid var(--ink);
   border-radius: 24px;
-  background: var(--sun-50);
+  background: var(--paper);
   box-shadow: 6px 6px 0 var(--ink);
 }
 
@@ -141,7 +141,7 @@
   padding: 11px 18px;
   border: 2.5px solid var(--ink);
   border-radius: 999px;
-  background: var(--sun-50);
+  background: var(--paper);
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 700;
@@ -164,7 +164,7 @@
 }
 
 .btnPrimary {
-  background: var(--coral);
+  background: var(--accent);
 }
 
 .deco {
@@ -216,7 +216,7 @@
   aspect-ratio: 1 / 1.05;
   border-radius: clamp(14px, 2vw, 24px);
   background: var(--ink);
-  color: var(--sun);
+  color: var(--brand);
   font-size: clamp(40px, 9vw, 128px);
   font-weight: 800;
   letter-spacing: -0.04em;
@@ -232,7 +232,7 @@
   right: 0;
   top: 50%;
   height: 2px;
-  background: var(--sun);
+  background: var(--brand);
   opacity: 0.18;
 }
 
@@ -272,7 +272,7 @@
 /* Le surligneur jaune, en clin d'œil au dress code */
 .yellowMark {
   padding: 0 0.12em;
-  background: linear-gradient(transparent 52%, var(--sun-400) 52%);
+  background: linear-gradient(transparent 52%, var(--brand-strong) 52%);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
@@ -292,7 +292,7 @@
   font-family: var(--font-mono);
   font-size: 13px;
   font-weight: 700;
-  color: var(--coral);
+  color: var(--accent);
 }
 
 .cardText {
@@ -337,7 +337,7 @@
 }
 
 .input:focus-visible {
-  box-shadow: 0 0 0 4px var(--sun-400);
+  box-shadow: 0 0 0 4px var(--brand-strong);
 }
 
 .choices {
@@ -364,7 +364,7 @@
 }
 
 .choice[aria-pressed="true"] {
-  background: var(--sun-400);
+  background: var(--brand-strong);
   box-shadow: 3px 3px 0 var(--ink);
 }
 
@@ -402,7 +402,7 @@
   margin-top: 32px;
   padding: 10px 10px 8px;
   border: 2.5px solid var(--ink);
-  background: var(--sun-50);
+  background: var(--paper);
   box-shadow: 6px 6px 0 var(--ink);
   rotate: -4deg;
 }
@@ -458,7 +458,7 @@
 }
 
 .pollItem[data-full] .pollBar {
-  background: var(--sun-100);
+  background: var(--paper-2);
 }
 
 .pollOther {
@@ -475,7 +475,7 @@
   padding: 10px 18px;
   border: 2.5px dashed var(--ink);
   border-radius: 999px;
-  background: var(--sun-50);
+  background: var(--paper);
   font: inherit;
   font-size: 16px;
   font-weight: 800;
@@ -518,7 +518,7 @@
   padding: 16px 18px;
   border: 2.5px solid var(--ink);
   border-radius: 18px;
-  background: var(--sun-50);
+  background: var(--paper);
   font: inherit;
   color: var(--ink);
   text-align: left;
@@ -541,12 +541,12 @@
   position: absolute;
   inset: 0 auto 0 0;
   z-index: -1;
-  background: var(--sun-400);
+  background: var(--brand-strong);
   transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .pollItem[aria-pressed="true"] .pollBar {
-  background: var(--apricot);
+  background: var(--accent-soft);
 }
 
 .pollEmoji {
@@ -599,7 +599,7 @@
   font-weight: 800;
   line-height: 0.8;
   letter-spacing: -0.06em;
-  color: var(--coral);
+  color: var(--accent);
   -webkit-text-stroke: 3px var(--ink);
   paint-order: stroke fill;
 }
@@ -625,7 +625,7 @@
 .pillStar {
   padding: 16px 32px;
   border-width: 3px;
-  background: var(--sun-400);
+  background: var(--brand-strong);
   font-size: clamp(26px, 3.4vw, 40px);
   letter-spacing: -0.02em;
   box-shadow: 5px 5px 0 var(--ink);
@@ -642,7 +642,7 @@
 }
 
 .pillGhost:hover {
-  background: var(--sun-50);
+  background: var(--paper);
 }
 
 .pills {
@@ -671,12 +671,6 @@
   rotate: 10deg;
 }
 
-.pollDeco {
-  right: 18%;
-  top: 4%;
-  width: clamp(56px, 7vw, 100px);
-  rotate: -20deg;
-}
 
 .guestEmpty {
   max-width: 300px;
@@ -705,7 +699,7 @@
   position: absolute;
   inset: -8%;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--apricot) 0%, rgb(255 138 61 / 0.4) 45%, transparent 70%);
+  background: radial-gradient(circle, var(--accent-soft) 0%, rgb(255 138 61 / 0.4) 45%, transparent 70%);
 }
 
 .vinyl {
@@ -737,7 +731,7 @@
   width: 36%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--sun);
+  background: var(--brand);
   border: 2px solid var(--ink);
   text-align: center;
   font-weight: 800;
@@ -773,7 +767,7 @@
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 700;
-  color: var(--coral);
+  color: var(--accent);
 }
 
 .trackTitle {
@@ -832,7 +826,7 @@
   display: grid;
   place-items: center;
   padding: clamp(96px, 14vw, 180px) var(--gutter) 40px;
-  background: linear-gradient(180deg, var(--sky-8) 0%, var(--night) 100%);
+  background: linear-gradient(180deg, var(--sky-bottom) 0%, var(--night) 100%);
   overflow: hidden;
   text-align: center;
 }
@@ -843,49 +837,11 @@
   line-height: 0.82;
   letter-spacing: -0.055em;
   text-transform: uppercase;
-  color: var(--sun);
+  color: var(--brand);
 }
 
 .outroTitle span {
   display: block;
-}
-
-/* La lune qui se lève sur la nuit */
-.outroSun {
-  position: absolute;
-  left: 50%;
-  bottom: -38vmin;
-  width: 76vmin;
-  aspect-ratio: 1;
-  margin-left: -38vmin;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 34% 30%, rgb(255 255 255 / 0.55) 0 8%, transparent 26%),
-    radial-gradient(circle at 62% 22%, rgb(214 196 150 / 0.55) 0 4%, transparent 7%),
-    radial-gradient(circle at 26% 52%, rgb(214 196 150 / 0.5) 0 3%, transparent 6%),
-    linear-gradient(180deg, var(--sun-50), var(--sun-100) 55%, #f3df9e);
-  border: 3px solid var(--ink);
-  box-shadow: 0 0 80px 20px rgb(255 238 140 / 0.22);
-}
-
-/* La nuit qui tombe sur l'outro (opacité pilotée par le scroll) */
-/* Les étoiles, qui s'allument au scroll */
-.outroNight {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-}
-
-.star {
-  position: absolute;
-  background: var(--sun-100);
-  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
-  animation: twinkle 2.4s ease-in-out infinite;
-}
-
-@keyframes twinkle {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.25; transform: scale(0.6); }
 }
 
 .outroContent {
@@ -912,7 +868,7 @@
   padding: 7px 14px;
   border: 2px solid var(--ink);
   border-radius: 999px;
-  background: var(--sun-50);
+  background: var(--paper);
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 700;
@@ -966,11 +922,6 @@
     width: 58px;
   }
 
-  .pollDeco {
-    right: 70px;
-    top: -54px;
-    width: 48px;
-  }
 
   .footer span:nth-child(2) {
     display: none;

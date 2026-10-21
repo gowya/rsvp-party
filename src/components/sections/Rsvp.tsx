@@ -1,21 +1,20 @@
 "use client";
 
+import { THEME } from "@/themes";
+import Title from "./Title";
 import { skyClass, type Sky } from "@/lib/sky";
 import { useRef, useState, type FormEvent } from "react";
 import Image from "next/image";
 import { EVENT } from "@/data/event";
-import PhotoPlaceholder from "../PhotoPlaceholder";
 import { flyToGuests } from "@/lib/celebrate";
 import { burstConfetti } from "@/lib/confetti";
 import { submitRsvp, useLive } from "@/lib/live";
 import type { Answer } from "@/lib/poll";
 import s from "./sections.module.css";
 
-const ANSWERS: { key: Answer; label: string }[] = [
-  { key: "oui", label: "Je viens 🔥" },
-  { key: "peut-etre", label: "Peut-être 🤔" },
-  { key: "non", label: "Je peux pas 😢" },
-];
+const COPY = THEME.copy.rsvp;
+const ANSWERS = (["oui", "peut-etre", "non"] as Answer[]).map((key) => ({ key, label: COPY.answers[key] }));
+const Placeholder = THEME.RsvpPlaceholder;
 
 const THANKS = EVENT.texts.thanks;
 
@@ -64,18 +63,14 @@ export default function Rsvp({ sky }: { sky: Sky }) {
     <section className={skyClass(s, sky)} style={sky.style} id="rsvp">
       <div className={`${s.wrap} ${s.rsvp}`}>
         <div>
-          <span className={s.kicker}>✦ Réponds-moi</span>
-          <h2 className={s.title}>
-            Alors,
-            <br />
-            tu viens&nbsp;?
-          </h2>
+          <span className={s.kicker}>{COPY.kicker}</span>
+          <Title lines={COPY.title} />
           <figure className={s.polaroid}>
             <div className={s.polaroidImg}>
               {EVENT.photos.rsvp ? (
                 <Image src={EVENT.photos.rsvp.src} alt={EVENT.photos.rsvp.alt} fill sizes="(max-width: 800px) 60vw, 280px" />
               ) : (
-                <PhotoPlaceholder variant="yay" />
+                <Placeholder />
               )}
             </div>
             <figcaption className={s.hand}>{EVENT.texts.rsvpCaption}</figcaption>
@@ -85,29 +80,29 @@ export default function Rsvp({ sky }: { sky: Sky }) {
         <div className={s.card} data-land="">
           {!editing && me ? (
             <div className={s.thanks}>
-              <p className={s.thanksBig}>C&apos;est noté, {me.name} !</p>
+              <p className={s.thanksBig}>{COPY.done(me.name)}</p>
               <p className={s.hand}>{THANKS[me.answer]}</p>
               <button type="button" className={s.btn} onClick={startEditing}>
-                Modifier ma réponse
+                {COPY.edit}
               </button>
             </div>
           ) : (
             <form className={s.form} onSubmit={onSubmit}>
               <label className={s.field}>
-                <span className={s.label}>Ton prénom</span>
+                <span className={s.label}>{COPY.name}</span>
                 <input
                   className={s.input}
                   value={form.name}
                   onChange={(e) => update({ name: e.target.value })}
-                  placeholder="Beyoncé"
+                  placeholder={COPY.namePlaceholder}
                   autoComplete="given-name"
                   maxLength={40}
                   required
                 />
               </label>
 
-              <div className={s.field} role="group" aria-label="Ta réponse">
-                <span className={s.label}>Ta réponse</span>
+              <div className={s.field} role="group" aria-label={COPY.answer}>
+                <span className={s.label}>{COPY.answer}</span>
                 <div className={s.choices}>
                   {ANSWERS.map((a) => (
                     <button
@@ -126,7 +121,7 @@ export default function Rsvp({ sky }: { sky: Sky }) {
               {/* Champ piège pour les robots, invisible pour les humains */}
               <input ref={honeypot} name="website" className={s.honeypot} tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
-              {status === "error" && <p className={s.formError}>Oups, ça n&apos;a pas marché. Réessaie dans un instant.</p>}
+              {status === "error" && <p className={s.formError}>{COPY.error}</p>}
 
               <button
                 ref={submitBtn}
@@ -134,7 +129,7 @@ export default function Rsvp({ sky }: { sky: Sky }) {
                 className={`${s.btn} ${s.btnPrimary} ${s.submit}`}
                 disabled={!form.name.trim() || !form.answer || status === "sending"}
               >
-                {status === "sending" ? "Envoi…" : "Envoyer ma réponse →"}
+                {status === "sending" ? COPY.sending : COPY.submit}
               </button>
             </form>
           )}

@@ -1,8 +1,9 @@
 import type { CSSProperties } from "react";
+import { THEME } from "@/themes";
 
-// Le ciel du site : du plein jour (haut) à la nuit (bas). Chaque section en prend une tranche,
+// Le ciel du site (rampe de couleurs du thème) : du haut vers le bas de la page. Chaque section en prend une tranche,
 // selon le nombre de sections affichées, pour que le coucher de soleil reste continu.
-const RAMP = ["#ffee8c", "#ffdf73", "#ffc65a", "#ffa645", "#f98236", "#d8572a", "#8e3517", "#2e140a"];
+const RAMP = THEME.sky.ramp;
 
 const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
 const toHex = (rgb: number[]) => "#" + rgb.map((v) => Math.round(v).toString(16).padStart(2, "0")).join("");

@@ -3,7 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { ITEM_RAIN_EVENT } from "@/lib/motion";
-import { DRAWER_ITEMS } from "./drawerItems";
+import { THEME } from "@/themes";
+
+const DRAWER_ITEMS = THEME.easterEgg.items;
 import { Mirror } from "./illus/shared";
 import { repaintPatternsSoon } from "@/lib/repaint";
 

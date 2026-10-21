@@ -6,7 +6,7 @@
   z-index: 50;
   display: grid;
   place-items: center;
-  background: var(--sun);
+  background: var(--brand);
 }
 
 .loaderInner {
@@ -31,7 +31,7 @@
 .count sup {
   font-size: 0.32em;
   margin-left: 0.06em;
-  color: var(--coral);
+  color: var(--accent);
 }
 
 .line {
@@ -45,7 +45,7 @@
 .lineFill {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--sun-400), var(--tangerine), var(--coral));
+  background: linear-gradient(90deg, var(--brand-strong), var(--accent-mid), var(--accent));
   transform-origin: left;
   transform: scaleX(0);
 }
@@ -66,7 +66,7 @@
   height: 100svh;
   min-height: 620px;
   overflow: hidden;
-  background: var(--sky);
+  background: linear-gradient(180deg, var(--paper-2) 0%, var(--brand) 38%, var(--brand-strong) 64%, var(--accent-soft) 84%, var(--accent-mid) 100%);
   isolation: isolate;
 }
 
@@ -94,7 +94,7 @@
   aspect-ratio: 1;
   margin: calc(min(74vh, 92vw) / -2) 0 0 calc(min(74vh, 92vw) / -2);
   border-radius: 50%;
-  background: linear-gradient(180deg, #fff3b0 0%, var(--sun-400) 35%, var(--apricot) 62%, var(--coral) 100%);
+  background: linear-gradient(180deg, #fff3b0 0%, var(--brand-strong) 35%, var(--accent-soft) 62%, var(--accent) 100%);
   -webkit-mask:
     linear-gradient(#000 0 0) top / 100% 55% no-repeat,
     repeating-linear-gradient(180deg, #000 0 16px, transparent 16px 24px) bottom / 100% 45% no-repeat;
@@ -164,7 +164,7 @@
   line-height: 0.82;
   letter-spacing: -0.045em;
   color: var(--ink);
-  text-shadow: 0.035em 0.035em 0 var(--sun-50);
+  text-shadow: 0.035em 0.035em 0 var(--paper);
 }
 
 .letterMask {
@@ -194,7 +194,7 @@
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.04em;
-  color: var(--coral);
+  color: var(--accent);
   -webkit-text-stroke: 0.035em var(--ink);
   paint-order: stroke fill;
 }
@@ -203,7 +203,7 @@
   padding: 0.18em 0.6em 0.22em;
   border: 2.5px solid var(--ink);
   border-radius: 999px;
-  background: var(--rose);
+  background: var(--pop-1);
   font-family: var(--font-mono);
   font-size: 0.3em;
   font-weight: 700;
@@ -223,7 +223,7 @@
 
 .photo {
   padding: 8px 8px 26px;
-  background: var(--sun-50);
+  background: var(--paper);
   border: 2.5px solid var(--ink);
   box-shadow: 6px 6px 0 var(--ink);
   transform: rotate(6deg);
@@ -233,7 +233,7 @@
   position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: var(--apricot);
+  background: var(--accent-soft);
 }
 
 .photoInner img {
@@ -318,7 +318,7 @@ button.item:hover svg {
   padding: 8px 14px;
   border: 2px solid var(--ink);
   border-radius: 999px;
-  background: var(--sun-50);
+  background: var(--paper);
   box-shadow: 3px 3px 0 var(--ink);
   font-family: var(--font-mono);
   font-size: 12px;
@@ -338,7 +338,7 @@ button.item:hover svg {
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--ink);
-  color: var(--sun);
+  color: var(--brand);
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -368,7 +368,7 @@ button.item:hover svg {
   width: 40%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--coral);
+  background: var(--accent);
   font-size: clamp(20px, 2vw, 26px);
   font-weight: 800;
   color: var(--ink);

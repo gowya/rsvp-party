@@ -32,6 +32,23 @@ Tout se règle dans un seul fichier : [`src/event.config.ts`](src/event.config.t
 
 Les sections invités, sondage et playlist ont besoin de la section réponse. Sans réponse, le site n'a pas besoin de base de données.
 
+## Les thèmes
+
+Le look and feel d'un site vient de son thème, choisi par `theme` dans la configuration. Thème disponible : **`disco`** (anniversaire : soleil couchant, boule disco, cocktails, nuit étoilée).
+
+Un thème vit dans `src/themes/<nom>/` et fournit (contrat complet dans [`src/themes/types.ts`](src/themes/types.ts)) :
+
+- **les couleurs**, sous des noms neutres (`ink`, `paper`, `brand`, `accent`…), et la rampe du ciel des sections, du haut vers le bas de la page ;
+- **les polices** ;
+- **le premier écran** (`Hero`, chargement compris) et une **animation signature** au scroll (`Scenes`) ;
+- **le décor** de chaque section, l'illustration du dress code et celle qui remplace la photo du formulaire ;
+- **l'easter egg** : le contenu du tiroir caché ;
+- **tous les textes communs**, dans la voix du thème (tutoiement festif pour `disco`, vouvoiement pour un mariage…).
+
+Le reste du site (sections, réponses en direct, sondage, playlist, admin, API) est commun à tous les thèmes.
+
+**Créer un thème :** copier `src/themes/disco` sous un nouveau nom, l'adapter, l'ajouter dans [`src/themes/index.ts`](src/themes/index.ts) et dans le type `theme` de [`src/config/schema.ts`](src/config/schema.ts).
+
 ## Stack
 
 Next.js, GSAP, Three.js, Postgres (Neon), Vercel.

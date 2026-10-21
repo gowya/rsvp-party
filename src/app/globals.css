@@ -1,43 +1,7 @@
 :root {
-  /* Coucher de soleil : du jaune vers l'orange */
-  --sun-50: #fffbe6;
-  --sun-100: #fff6c2;
-  --sun: #ffee8c;
-  --sun-400: #ffd95a;
-  --apricot: #ffb347;
-  --tangerine: #ff8a3d;
-  --coral: #ff6b4a;
-
-  /* Accents des illustrations */
-  --rose: #ff7eb6;
-  --lilac: #b9a4ff;
-  --mint: #5fd3b5;
-
-  --ink: #2b1608;
-  --ink-soft: #6b4424;
-
-  --sky: linear-gradient(
-    180deg,
-    var(--sun-100) 0%,
-    var(--sun) 38%,
-    var(--sun-400) 64%,
-    var(--apricot) 84%,
-    var(--tangerine) 100%
-  );
-
+  /* Les couleurs viennent du thème (src/themes/<thème>/index.tsx), posées sur <html> par le layout */
   --gutter: clamp(16px, 3vw, 40px);
   --wave: clamp(28px, 4vw, 56px);
-
-  /* Le ciel des sections : du plein jour à la nuit, une teinte par frontière de section */
-  --sky-1: #ffee8c;
-  --sky-2: #ffdf73;
-  --sky-3: #ffc65a;
-  --sky-4: #ffa645;
-  --sky-5: #f98236;
-  --sky-6: #d8572a;
-  --sky-7: #8e3517;
-  --sky-8: #2e140a;
-  --night: #170a05;
 }
 
 *,
@@ -55,7 +19,7 @@ body {
 }
 
 body {
-  background: var(--sun);
+  background: var(--brand);
   color: var(--ink);
   font-family: var(--font-display), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -86,6 +50,6 @@ a {
 }
 
 ::selection {
-  background: var(--coral);
-  color: var(--sun-50);
+  background: var(--accent);
+  color: var(--paper);
 }

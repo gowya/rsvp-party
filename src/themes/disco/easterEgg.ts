@@ -1,0 +1,51 @@
+import type { Theme } from "../types";
+import { CocktailCubaLibre, CocktailMojito, CocktailMule, CocktailPornstar } from "./illus/Cocktails";
+import {
+  DrinkBlueLagoon,
+  DrinkBloodyMary,
+  DrinkCaipirinha,
+  DrinkChampagne,
+  DrinkCosmopolitan,
+  DrinkDaiquiri,
+  DrinkEspressoMartini,
+  DrinkGinTonic,
+  DrinkMargarita,
+  DrinkMartini,
+  DrinkNegroni,
+  DrinkOldFashioned,
+  DrinkPinaColada,
+  DrinkSexOnTheBeach,
+  DrinkSpritz,
+  DrinkTequilaSunrise,
+} from "./illus/Drinks";
+
+// La carte du bar : le tiroir caché du thème disco
+export const easterEgg: Theme["easterEgg"] = {
+  title: "La carte du bar",
+  subtitle: (n) => `${n} cocktails à la carte. Le barman, c'est toi.`,
+  handle: "🍹 tire-moi",
+  open: "Ouvrir la carte du bar",
+  hint: "psst, les cocktails sont cliquables",
+  items: [
+    { key: "mojito", label: "Mojito", Comp: CocktailMojito },
+    { key: "spritz", label: "Spritz", Comp: DrinkSpritz },
+    { key: "margarita", label: "Margarita", Comp: DrinkMargarita },
+    { key: "pornstar", label: "Pornstar martini", Comp: CocktailPornstar },
+    { key: "pina", label: "Piña colada", Comp: DrinkPinaColada },
+    { key: "cosmo", label: "Cosmopolitan", Comp: DrinkCosmopolitan },
+    { key: "gintonic", label: "Gin tonic", Comp: DrinkGinTonic },
+    { key: "cuba", label: "Cuba libre", Comp: CocktailCubaLibre },
+    { key: "mule", label: "Moscow mule", Comp: CocktailMule },
+    { key: "negroni", label: "Negroni", Comp: DrinkNegroni },
+    { key: "espresso", label: "Espresso martini", Comp: DrinkEspressoMartini },
+    { key: "sotb", label: "Sex on the beach", Comp: DrinkSexOnTheBeach },
+    { key: "sunrise", label: "Tequila sunrise", Comp: DrinkTequilaSunrise },
+    { key: "caipi", label: "Caipirinha", Comp: DrinkCaipirinha },
+    { key: "oldfashioned", label: "Old fashioned", Comp: DrinkOldFashioned },
+    { key: "martini", label: "Dry martini", Comp: DrinkMartini },
+    { key: "daiquiri", label: "Daiquiri", Comp: DrinkDaiquiri },
+    { key: "bluelagoon", label: "Blue lagoon", Comp: DrinkBlueLagoon },
+    { key: "bloodymary", label: "Bloody mary", Comp: DrinkBloodyMary },
+    { key: "champagne", label: "Champagne", Comp: DrinkChampagne },
+  ],
+};

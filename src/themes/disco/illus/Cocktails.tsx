@@ -1,6 +1,6 @@
 "use client";
 
-import { CitrusWheel, INK, Ice, Mint, Sparkle, Straw, o, thin } from "./illus/shared";
+import { CitrusWheel, INK, Ice, Mint, Sparkle, Straw, o, thin } from "@/components/illus/shared";
 
 type P = { className?: string };
 

@@ -1,14 +1,17 @@
 "use client";
 
+import { THEME } from "@/themes";
+import Title from "./Title";
 import { skyClass, type Sky } from "@/lib/sky";
 import { useEffect, useState } from "react";
 import { EVENT } from "@/data/event";
-import { DrinkSpritz } from "../illus/Drinks";
 import DrawerTrigger from "../DrawerTrigger";
 import s from "./sections.module.css";
 
 const TARGET = new Date(EVENT.start).getTime();
-const UNITS = ["Jours", "Heures", "Min", "Sec"];
+const COPY = THEME.copy.countdown;
+const UNITS = COPY.units;
+const Decor = THEME.decor.countdown;
 
 function split(ms: number) {
   const t = Math.max(0, Math.floor(ms / 1000));
@@ -29,14 +32,8 @@ export default function Countdown({ sky }: { sky: Sky }) {
   return (
     <section className={skyClass(s, sky)} style={sky.style} id="countdown">
       <div className={s.wrap}>
-        <span className={s.kicker}>✦ Le jour J approche</span>
-        <h2 className={s.title}>
-          Encore
-          <br />
-          <span className={s.outline}>un peu</span>
-          <br />
-          de patience
-        </h2>
+        <span className={s.kicker}>{COPY.kicker}</span>
+        <Title lines={COPY.title} />
         <div className={s.countGrid} role="timer" aria-live="off">
           {UNITS.map((unit, i) => (
             <div key={unit} className={s.tile}>
@@ -45,9 +42,11 @@ export default function Countdown({ sky }: { sky: Sky }) {
             </div>
           ))}
         </div>
-        <DrawerTrigger flip className={s.deco} style={{ right: "2%", top: "-4%", width: "clamp(70px, 10vw, 140px)", rotate: "16deg" }}>
-          <DrinkSpritz />
-        </DrawerTrigger>
+        {Decor && (
+          <DrawerTrigger flip className={s.deco} style={{ right: "2%", top: "-4%", width: "clamp(70px, 10vw, 140px)", rotate: "16deg" }}>
+            <Decor />
+          </DrawerTrigger>
+        )}
       </div>
     </section>
   );

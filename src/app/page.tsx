@@ -1,9 +1,7 @@
 import type { ComponentType } from "react";
-import Intro from "@/components/Intro";
 import EasterDrawer from "@/components/EasterDrawer";
 import ItemRain from "@/components/ItemRain";
 import MotionController from "@/components/MotionController";
-import ScrollScenes from "@/components/ScrollScenes";
 import SmoothAnchors from "@/components/SmoothAnchors";
 import LiveSync from "@/components/LiveSync";
 import Countdown from "@/components/sections/Countdown";
@@ -15,6 +13,9 @@ import Playlist from "@/components/sections/Playlist";
 import Outro from "@/components/sections/Outro";
 import { EVENT } from "@/data/event";
 import { skyFor, type Sky } from "@/lib/sky";
+import { THEME } from "@/themes";
+
+const { Hero, Scenes } = THEME;
 
 // L'ordre des sections ; celles désactivées dans src/event.config.ts sont retirées
 const SECTIONS: [keyof typeof EVENT.sections, ComponentType<{ sky: Sky }>][] = [
@@ -31,7 +32,7 @@ const ACTIVE = SECTIONS.filter(([key]) => EVENT.sections[key]);
 export default function Home() {
   return (
     <main>
-      <Intro />
+      <Hero />
       {ACTIVE.map(([key, Section], i) => (
         <Section key={key} sky={skyFor(i, ACTIVE.length)} />
       ))}
@@ -45,7 +46,7 @@ export default function Home() {
         </>
       )}
       <MotionController />
-      <ScrollScenes />
+      {Scenes && <Scenes />}
       <SmoothAnchors />
       <LiveSync />
     </main>

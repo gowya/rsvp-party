@@ -2,6 +2,7 @@
 
 import { useState, useSyncExternalStore } from "react";
 import { EVENT } from "@/data/event";
+import type { Theme } from "@/themes/types";
 import { rainItems, requestMotionPermission } from "@/lib/motion";
 
 const TOUCH = "(pointer: coarse)";
@@ -11,16 +12,16 @@ const subscribe = (cb: () => void) => {
   return () => mq.removeEventListener("change", cb);
 };
 
-const LABELS = {
-  idle: "✨ Active les paillettes",
-  on: EVENT.easterEgg.enabled ? "Penche ton tel… et secoue-le 👀" : "Penche ton tel 👀",
-  denied: EVENT.easterEgg.enabled ? "Pas grave, tape sur les cocktails 🍹" : "Pas grave, la fête continue 🪩",
-};
 
 // Sur téléphone : débloque le gyroscope et l'accéléromètre (obligatoire sur iPhone), puis fait une démo
-export default function MotionButton({ className }: { className?: string }) {
+export default function MotionButton({ className, labels }: { className?: string; labels: Theme["copy"]["motion"] }) {
+  const LABELS = {
+    idle: labels.idle,
+    on: EVENT.easterEgg.enabled ? labels.on : labels.onWithoutEgg,
+    denied: EVENT.easterEgg.enabled ? labels.denied : labels.deniedWithoutEgg,
+  };
   const isTouch = useSyncExternalStore(subscribe, () => window.matchMedia(TOUCH).matches, () => false);
-  const [state, setState] = useState<keyof typeof LABELS>("idle");
+  const [state, setState] = useState<"idle" | "on" | "denied">("idle");
 
   if (!isTouch) return null;
 

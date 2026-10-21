@@ -25,8 +25,8 @@
   border-radius: 32px 32px 0 0;
   background:
     repeating-linear-gradient(90deg, transparent 0 46px, rgb(43 22 8 / 0.035) 46px 48px),
-    var(--sun-100);
-  box-shadow: 0 -10px 0 var(--apricot);
+    var(--paper-2);
+  box-shadow: 0 -10px 0 var(--accent-soft);
   outline: none;
 }
 
@@ -61,8 +61,8 @@
   border: 2.5px solid var(--ink);
   border-bottom: 0;
   border-radius: 20px 20px 0 0;
-  background: var(--sun-100);
-  box-shadow: 0 -4px 0 var(--apricot);
+  background: var(--paper-2);
+  box-shadow: 0 -4px 0 var(--accent-soft);
   cursor: grab;
   touch-action: none;
 }
@@ -72,7 +72,7 @@
   height: 10px;
   border: 2px solid var(--ink);
   border-radius: 999px;
-  background: var(--coral);
+  background: var(--accent);
 }
 
 .handleLabel {
@@ -92,7 +92,7 @@
   margin-left: -32px;
   border: 2.5px solid var(--ink);
   border-radius: 999px;
-  background: var(--coral);
+  background: var(--accent);
 }
 
 .head {
@@ -145,7 +145,7 @@
   padding: 18px 10px 14px;
   border: 2.5px solid var(--ink);
   border-radius: 20px;
-  background: var(--sun-50);
+  background: var(--paper);
   box-shadow: 4px 4px 0 var(--ink);
 }
 

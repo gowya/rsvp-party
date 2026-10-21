@@ -1,27 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Caveat, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { EVENT } from "@/data/event";
-
-// Polices allégées : graisse seule pour Bricolage (128 → 40 ko), une graisse pour Caveat et Space Mono
-const display = Bricolage_Grotesque({
-  variable: "--font-display",
-  subsets: ["latin"],
-});
-
-// L'écriture manuscrite n'apparaît pas au premier écran : pas de préchargement
-const hand = Caveat({
-  variable: "--font-hand",
-  subsets: ["latin"],
-  weight: "400",
-  preload: false,
-});
-
-const mono = Space_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: "700",
-});
+import { THEME, themeCssVars } from "@/themes";
+import type { CSSProperties } from "react";
 
 const DESCRIPTION = EVENT.description;
 const TITLE = EVENT.title;
@@ -47,15 +28,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FFEE8C",
+  themeColor: THEME.colors.brand,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="fr"
-      className={`${display.variable} ${hand.variable} ${mono.variable}`}
-    >
+    <html lang="fr" className={THEME.fontClassName} style={themeCssVars(THEME) as CSSProperties}>
       <body>{children}</body>
     </html>
   );

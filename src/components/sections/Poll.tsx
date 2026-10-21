@@ -1,16 +1,19 @@
 "use client";
 
+import { THEME } from "@/themes";
+import Title from "./Title";
 import { skyClass, type Sky } from "@/lib/sky";
 import { useState } from "react";
 import { EVENT } from "@/data/event";
 import { saveBrings, useLive } from "@/lib/live";
 import { MAX_OTHERS_PER_GUEST, OTHER_MAX, POLL_ITEMS } from "@/lib/poll";
-import { CocktailCubaLibre } from "../Cocktails";
-import { DrinkTequilaSunrise } from "../illus/Drinks";
 import DrawerTrigger from "../DrawerTrigger";
 import s from "./sections.module.css";
 
 // Qui ramène quoi : on coche après avoir répondu, les prénoms ne sont visibles que dans l'admin
+const COPY = THEME.copy.poll;
+const Decor = THEME.decor.poll;
+
 export default function Poll({ sky }: { sky: Sky }) {
   const { me, counts, others } = useLive();
   const picked = me?.brings ?? [];
@@ -24,7 +27,7 @@ export default function Poll({ sky }: { sky: Sky }) {
     const full = await saveBrings(brings, others);
     if (full) {
       const label = POLL_ITEMS.find((it) => it.key === full)?.label ?? full;
-      setNotice(`Trop tard pour ${label.toLowerCase()}, c'est complet !`);
+      setNotice(COPY.tooLate(label));
     } else setNotice(null);
   };
 
@@ -56,30 +59,25 @@ export default function Poll({ sky }: { sky: Sky }) {
   return (
     <section className={skyClass(s, sky)} style={sky.style} id="sondage">
       <div className={s.wrap}>
-        <span className={s.kicker}>✦ Le sondage</span>
-        <h2 className={s.title}>
-          Qui ramène
-          <br />
-          <span className={s.outline}>quoi ?</span>
-        </h2>
+        <span className={s.kicker}>{COPY.kicker}</span>
+        <Title lines={COPY.title} />
         <p className={s.hand} style={{ marginTop: 20 }}>
           {EVENT.texts.pollIntro}
         </p>
 
-        <div className={`${s.deco} ${s.pollCocktail}`}>
-          <CocktailCubaLibre />
-        </div>
-        <DrawerTrigger flip className={`${s.deco} ${s.pollDeco}`}>
-          <DrinkTequilaSunrise />
-        </DrawerTrigger>
+        {Decor && (
+          <DrawerTrigger flip className={`${s.deco} ${s.pollCocktail}`}>
+            <Decor />
+          </DrawerTrigger>
+        )}
 
         {!canPick && (
           <p className={s.pollGate}>
             {me ? (
-              "Tu ne viens pas, donc pas de corvée pour toi 😉"
+              COPY.notComing
             ) : (
               <>
-                Réponds d&apos;abord au-dessus pour pouvoir cocher. <a href="#rsvp">Je réponds ↑</a>
+                {COPY.answerFirst} <a href="#rsvp">{COPY.answerLink}</a>
               </>
             )}
           </p>
@@ -108,7 +106,7 @@ export default function Poll({ sky }: { sky: Sky }) {
                 <span className={s.pollLabel}>{it.label}</span>
                 <span style={{ display: "flex", alignItems: "center" }}>
                   <span className={s.pollCount}>
-                    {isFull ? "Complet" : it.limit !== null ? `${count}/${it.limit}` : count}
+                    {isFull ? COPY.full : it.limit !== null ? `${count}/${it.limit}` : count}
                   </span>
                   <span className={s.pollCheck} aria-hidden="true">
                     {on ? "✓" : ""}
@@ -125,7 +123,7 @@ export default function Poll({ sky }: { sky: Sky }) {
               aria-pressed={o.own}
               aria-disabled={!o.own}
               onClick={() => o.own && void save(picked, mineOthers.filter((t) => t !== o.title))}
-              title={o.own ? "Retirer ma proposition" : undefined}
+              title={o.own ? COPY.otherRemove : undefined}
             >
               <span className={s.pollEmoji} aria-hidden="true">
                 ➕
@@ -145,7 +143,7 @@ export default function Poll({ sky }: { sky: Sky }) {
           mineOthers.length < MAX_OTHERS_PER_GUEST &&
           (otherDraft === null ? (
             <button type="button" className={s.otherPill} onClick={() => setOtherDraft("")}>
-              ➕ Autre chose
+              {COPY.other}
               {mineOthers.length > 0 && <span className={s.otherCount}> ({mineOthers.length}/{MAX_OTHERS_PER_GUEST})</span>}
             </button>
           ) : (
@@ -157,18 +155,18 @@ export default function Poll({ sky }: { sky: Sky }) {
               }}
             >
               <label className={s.field}>
-                <span className={s.label}>Tu ramènes quoi ?</span>
+                <span className={s.label}>{COPY.otherLabel}</span>
                 <input
                   className={s.input}
                   value={otherDraft}
                   onChange={(e) => setOtherDraft(e.target.value)}
-                  placeholder="Un gâteau, une enceinte, des guirlandes…"
+                  placeholder={COPY.otherPlaceholder}
                   maxLength={OTHER_MAX}
                   autoFocus
                 />
               </label>
               <button type="submit" className={`${s.btn} ${s.btnPrimary}`} disabled={!otherDraft.trim()}>
-                OK
+                {COPY.ok}
               </button>
             </form>
           ))}

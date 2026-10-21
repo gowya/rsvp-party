@@ -7,12 +7,14 @@ import DiscoBall from "./DiscoBall";
 import Image from "next/image";
 import { EVENT } from "@/data/event";
 import PhotoPlaceholder from "./PhotoPlaceholder";
-import { CocktailPornstar } from "./Cocktails";
-import { DRAWER, openDrawer } from "./drawerItems";
+import { CocktailPornstar } from "./illus/Cocktails";
+import { openDrawer } from "@/components/drawer";
+import { easterEgg } from "./easterEgg";
+import { copy } from "./copy";
 import { DrinkCosmopolitan, DrinkMargarita, DrinkNegroni, DrinkPinaColada, DrinkSpritz } from "./illus/Drinks";
-import MotionButton from "./MotionButton";
+import MotionButton from "@/components/MotionButton";
 import { markIntroDone } from "@/lib/motion";
-import s from "./Intro.module.css";
+import s from "./Hero.module.css";
 
 gsap.registerPlugin(useGSAP);
 
@@ -34,13 +36,14 @@ const ITEMS = [
 function Clickable({ className, children }: { className: string; children: ReactNode }) {
   if (!EVENT.easterEgg.enabled) return <div className={className}>{children}</div>;
   return (
-    <button type="button" className={className} onClick={openDrawer} aria-label={DRAWER.open}>
+    <button type="button" className={className} onClick={openDrawer} aria-label={easterEgg.open}>
       {children}
     </button>
   );
 }
 
-export default function Intro() {
+// Le premier écran du thème disco : chargement, soleil couchant rayé, boule disco, cocktails
+export default function Hero() {
   const root = useRef<HTMLDivElement>(null);
   const counter = useRef<HTMLSpanElement>(null);
 
@@ -188,7 +191,7 @@ export default function Intro() {
           <p className={s.infoMeta}>
             {EVENT.dateShortWithDay} · {EVENT.time} · {EVENT.city}
           </p>
-          <MotionButton className={s.motionBtn} />
+          <MotionButton className={s.motionBtn} labels={copy.motion} />
         </div>
 
         <a href={CTA.href} className={`${s.cta} ${s.reveal}`} aria-label={CTA.label}>
@@ -207,7 +210,7 @@ export default function Intro() {
 
         {/* Vague qui raccorde le hero au ciel des sections */}
         <svg className={s.wave} viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M0 56 V28 C120 0 240 0 360 28 S600 56 720 28 S960 0 1080 28 S1320 56 1440 28 V56 Z" fill="var(--sky-1)" />
+          <path d="M0 56 V28 C120 0 240 0 360 28 S600 56 720 28 S960 0 1080 28 S1320 56 1440 28 V56 Z" fill="var(--sky-top)" />
         </svg>
       </section>
     </div>

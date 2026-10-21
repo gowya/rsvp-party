@@ -27,7 +27,7 @@ export async function flyToGuests(name: string, from: DOMRect, pillClass: string
     left: `${start.x}px`,
     top: `${start.y}px`,
     zIndex: "96",
-    background: "var(--mint)",
+    background: "var(--pop-3)",
     whiteSpace: "nowrap",
     pointerEvents: "none",
   });

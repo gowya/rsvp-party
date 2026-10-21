@@ -1,14 +1,19 @@
 "use client";
 
+import { THEME } from "@/themes";
+import Title from "./Title";
 import { skyClass, type Sky } from "@/lib/sky";
 import { useState, type FormEvent } from "react";
 import { addSong, removeSong, useLive } from "@/lib/live";
 import { MAX_SONGS_PER_GUEST } from "@/lib/poll";
-import { CocktailMojito } from "../Cocktails";
+import DrawerTrigger from "../DrawerTrigger";
 import { EVENT } from "@/data/event";
 import s from "./sections.module.css";
 
 // La playlist proposée par les invités, sans dire qui a proposé quoi (visible seulement dans l'admin)
+const COPY = THEME.copy.playlist;
+const Decor = THEME.decor.playlist;
+
 export default function Playlist({ sky }: { sky: Sky }) {
   const { songs, me } = useLive();
   const [title, setTitle] = useState("");
@@ -41,16 +46,14 @@ export default function Playlist({ sky }: { sky: Sky }) {
   return (
     <section className={skyClass(s, sky)} style={sky.style} id="playlist">
       <div className={s.wrap}>
-        <span className={s.kicker}>✦ Proposée par vous</span>
-        <h2 className={s.title}>
-          La
-          <br />
-          <span className={s.sunset}>playlist</span>
-        </h2>
+        <span className={s.kicker}>{COPY.kicker}</span>
+        <Title lines={COPY.title} />
 
-        <div className={s.deco} style={{ right: "4%", top: "-2%", width: "clamp(70px, 9vw, 120px)", rotate: "12deg" }}>
-          <CocktailMojito />
-        </div>
+        {Decor && (
+          <DrawerTrigger className={s.deco} style={{ right: "4%", top: "-2%", width: "clamp(70px, 9vw, 120px)", rotate: "12deg" }}>
+            <Decor />
+          </DrawerTrigger>
+        )}
 
         <div className={s.playlist}>
           <div className={s.vinylWrap}>
@@ -79,7 +82,7 @@ export default function Playlist({ sky }: { sky: Sky }) {
                         className={s.trackDelete}
                         onClick={() => void removeSong(song.ownId as string)}
                         aria-label={`Retirer ${song.title}`}
-                        title="Retirer mon son"
+                        title={COPY.remove}
                       >
                         <svg viewBox="0 0 24 24" aria-hidden="true">
                           <path d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13M10 11v6M14 11v6" />
@@ -90,7 +93,7 @@ export default function Playlist({ sky }: { sky: Sky }) {
                 ))}
               </ol>
             ) : (
-              <p className={s.hand}>Pas encore de son proposé… lance la soirée avec le premier ↓</p>
+              <p className={s.hand}>{COPY.empty}</p>
             )}
 
             {/* Proposer un son : anonyme sur le site, seule l'admin voit qui l'a proposé */}
@@ -98,25 +101,25 @@ export default function Playlist({ sky }: { sky: Sky }) {
               {me ? (
                 <form className={s.songForm} onSubmit={onSubmit}>
                   <label className={s.field}>
-                    <span className={s.label}>Un son à proposer</span>
+                    <span className={s.label}>{COPY.label}</span>
                     <input
                       className={s.input}
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
-                      placeholder="Dancing Queen, ABBA"
+                      placeholder={COPY.placeholder}
                       maxLength={100}
                       disabled={full}
                     />
                   </label>
                   <button type="submit" className={`${s.btn} ${s.btnPrimary}`} disabled={!title.trim() || status === "sending" || full}>
-                    {status === "sending" ? "Ajout…" : "Ajouter ♫"}
+                    {status === "sending" ? COPY.adding : COPY.add}
                   </button>
-                  {status === "error" && <p className={s.formError}>Oups, ça n&apos;a pas marché. Réessaie.</p>}
-                  {full && <p className={s.songHint}>Tu as proposé tes {MAX_SONGS_PER_GUEST} sons, merci DJ.</p>}
+                  {status === "error" && <p className={s.formError}>{COPY.error}</p>}
+                  {full && <p className={s.songHint}>{COPY.full(MAX_SONGS_PER_GUEST)}</p>}
                 </form>
               ) : (
                 <p className={s.songHint}>
-                  Réponds d&apos;abord au formulaire pour proposer un son. <a href="#rsvp">Je réponds ↑</a>
+                  {COPY.answerFirst} <a href="#rsvp">{COPY.answerLink}</a>
                 </p>
               )}
             </div>

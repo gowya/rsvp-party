@@ -1,0 +1,37 @@
+/* La lune qui se lève sur la nuit */
+.moon {
+  position: absolute;
+  left: 50%;
+  bottom: -38vmin;
+  width: 76vmin;
+  aspect-ratio: 1;
+  margin-left: -38vmin;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 30%, rgb(255 255 255 / 0.55) 0 8%, transparent 26%),
+    radial-gradient(circle at 62% 22%, rgb(214 196 150 / 0.55) 0 4%, transparent 7%),
+    radial-gradient(circle at 26% 52%, rgb(214 196 150 / 0.5) 0 3%, transparent 6%),
+    linear-gradient(180deg, var(--paper), var(--paper-2) 55%, #f3df9e);
+  border: 3px solid var(--ink);
+  box-shadow: 0 0 80px 20px rgb(255 238 140 / 0.22);
+}
+
+/* Les étoiles, qui s'allument au scroll */
+.night {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.star {
+  position: absolute;
+  background: var(--paper-2);
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.25; transform: scale(0.6); }
+}
+
